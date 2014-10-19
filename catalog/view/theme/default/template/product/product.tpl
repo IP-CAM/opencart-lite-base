@@ -335,7 +335,7 @@ $('.colorbox').colorbox({
 	opacity: 0.5
 });
 //--></script> 
-<script type="text/javascript"><!--
+<script type="text/javascript">
 $('#button-cart').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
@@ -343,7 +343,7 @@ $('#button-cart').bind('click', function() {
 		data: $('.product-info input[type=\'text\'], .product-info input[type=\'hidden\'], .product-info input[type=\'radio\']:checked, .product-info input[type=\'checkbox\']:checked, .product-info select, .product-info textarea'),
 		dataType: 'json',
 		success: function(json) {
-			$('.success, .warning, .attention, information, .error').remove();
+			$('.success, .warning, .attention, .information, .error').remove();
 			
 			if (json['error']) {
 				if (json['error']['option']) {
@@ -365,12 +365,12 @@ $('#button-cart').bind('click', function() {
 		}
 	});
 });
-//--></script>
+</script>
 <?php if ($options) { ?>
 <script type="text/javascript" src="catalog/view/javascript/jquery/ajaxupload.js"></script>
 <?php foreach ($options as $option) { ?>
 <?php if ($option['type'] == 'file') { ?>
-<script type="text/javascript"><!--
+<script type="text/javascript">
 new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
 	action: 'index.php?route=product/product/upload',
 	name: 'file',
@@ -398,12 +398,12 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
 		$('.loading').remove();	
 	}
 });
-//--></script>
+</script>
 <?php } ?>
 <?php } ?>
 <?php } ?>
-<script type="text/javascript"><!--
-$('#review .pagination a').live('click', function() {
+<script type="text/javascript">
+$('#review .pagination a').on('click', function() {
 	$('#review').fadeOut('slow');
 		
 	$('#review').load(this.href);
@@ -415,7 +415,7 @@ $('#review .pagination a').live('click', function() {
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
-$('#button-review').bind('click', function() {
+$('#button-review').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		type: 'post',
@@ -446,13 +446,13 @@ $('#button-review').bind('click', function() {
 		}
 	});
 });
-//--></script> 
-<script type="text/javascript"><!--
+</script>
+<script type="text/javascript">
 $('#tabs a').tabs();
-//--></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
-<script type="text/javascript"><!--
-if ($.browser.msie && $.browser.version == 6) {
+</script>
+<!--<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> -->
+<script type="text/javascript">
+/*if ($.browser.msie && $.browser.version == 6) {
 	$('.date, .datetime, .time').bgIframe();
 }
 
@@ -462,5 +462,6 @@ $('.datetime').datetimepicker({
 	timeFormat: 'h:m'
 });
 $('.time').timepicker({timeFormat: 'h:m'});
-//--></script> 
+*/
+</script>
 <?php echo $footer; ?>
