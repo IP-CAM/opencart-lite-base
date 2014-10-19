@@ -1631,3 +1631,194 @@ a.button:hover, input.button:hover {
 .banner div img {
 	margin-bottom: 20px;
 }
+.main-login {
+	color: #7F7F7F;
+}
+
+.login, .register {
+	background-image: url("../image/bg_2.png");
+	background-color: rgba(255, 255, 255, 0);
+}
+.main-login {
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+.main-login .logo {
+	padding: 20px;
+	text-align: center;
+}
+.main-login .box-login, .main-login .box-forgot, .main-login .box-register {
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: -30px 30px 50px rgba(0, 0, 0, 0.32);
+	overflow: hidden;
+	padding: 15px;
+}
+.main-login .box-forgot, .main-login .box-register {
+	/*display: none;*/
+}
+.main-login .form fieldset {
+	border: none;
+	margin: 0;
+	padding: 10px 0 0;
+}
+.main-login a.forgot {
+	color: #909090;
+	font-size: 12px;
+	position: absolute;
+	right: 10px;
+	text-shadow: 1px 1px 1px #FFFFFF;
+	top: 9px;
+}
+.main-login input.password {
+	padding-right: 130px;
+}
+.main-login label {
+	color: #7F7F7F;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+.main-login .copyright {
+	font-size: 11px;
+	margin: 0 auto;
+	padding: 10px 10px 0;
+	text-align: center;
+}
+.main-login .form-actions:before, .main-login .form-actions:after {
+	content: "";
+	display: table;
+	line-height: 0;
+}
+.main-login .form-actions:after {
+	clear: both;
+}
+.main-login .form-actions {
+	margin-top: 15px;
+	padding-top: 10px;
+	display: block;
+}
+.main-login .new-account {
+	border-top: 1px dotted #EEEEEE;
+	margin-top: 15px;
+	padding-top: 10px;
+	display: block;
+}
+/* Logo */
+.main-login .logo {
+	padding: 14px 10px 12px;
+	margin-left: 0;
+	font-family: 'Raleway', sans-serif;
+	font-size: 25px;
+	min-width:210px;
+}
+.main-login .logo i {
+	font-size: 20px;
+}
+label {
+	font-weight: normal;
+}
+span.input-icon, span.input-help {
+	display: block;
+	position: relative;
+}
+.input-icon > input {
+	padding-left: 25px;
+	padding-right: 6px;
+}
+.input-icon.input-icon-right > input {
+	padding-left: 6px;
+	padding-right: 25px;
+}
+span.input-help > input {
+	padding-left: 30px;
+	padding-right: 6px;
+}
+.input-icon > [class*="fa-"], .input-icon > [class*="clip-"] {
+	bottom: 0;
+	color: #909090;
+	display: inline-block;
+	font-size: 14px;
+	left: 5px;
+	line-height: 35px;
+	padding: 0 3px;
+	position: absolute;
+	top: 0;
+	z-index: 2;
+}
+
+.input-icon.input-icon-right > [class*="fa-"], .input-icon.input-icon-right > [class*="clip-"] {
+	left: auto;
+	right: 4px;
+}
+.input-icon > input:focus + [class*="fa-"], .input-icon > input:focus + [class*="clip-"] {
+	color: #557799;
+}
+.help-button {
+	background-color: #65BCDA;
+	border-radius: 100% 100% 100% 100%;
+	color: #FFFFFF;
+	cursor: default;
+	position: absolute;
+	font-size: 14px;
+	font-weight: bold;
+	height: 20px;
+	padding: 0;
+	text-align: center;
+	width: 20px;
+	line-height: 20px;
+	top: 7px;
+	left: 7px;
+}
+.help-button:before {
+	content: "\f128";
+	display: inline;
+	font-family: FontAwesome;
+	font-weight: 300;
+	height: auto;
+	text-shadow: none;
+	font-style: normal;
+}
+select.form-control {
+	background-color: #FFFFFF;
+	border: 1px solid #D5D5D5;
+	border-radius: 0 0 0 0;
+	color: #858585;
+}
+select.form-control option {
+	padding: 3px 4px;
+}
+.form-control.search-select {
+	padding: 0 !important;
+	box-shadow: none;
+	border: none;
+}
+.error {
+	color: red;
+}
+.radio label.radio-inline, .checkbox label.checkbox-inline {
+	display: inline-block;
+}
+
+.radio-inline, .radio-inline + .radio-inline, .checkbox-inline, .checkbox-inline + .checkbox-inline {
+	margin-right: 10px !important;
+	margin-top: 5px !important;
+	margin-left: 0 !important;
+	margin-bottom: 10px !important;
+}
+.radio label, .checkbox label {
+	margin-bottom: 5px;
+}
+.checkbox-table {
+	display: inline-block;
+	margin: 2px 0 0 0;
+	padding-left: 20px;
+	line-height: 10px;
+}
+.checkbox-table label {
+	margin-bottom: 0;
+}
+[class^="icheckbox_"], [class*="icheckbox_"], [class^="iradio_"], [class*="iradio_"] {
+	float: left !important;
+	margin: 0 5px 0 -20px !important;
+}
