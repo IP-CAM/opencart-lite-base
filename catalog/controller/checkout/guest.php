@@ -24,8 +24,7 @@ class Guest implements iController {
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
 		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');			
-		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
-		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
+		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
 		$this->data['entry_city'] = $this->language->get('entry_city');
 		$this->data['entry_country'] = $this->language->get('entry_country');
@@ -90,56 +89,38 @@ class Guest implements iController {
 			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 		
-		// Company ID
-		if (isset($this->session->data['guest']['payment']['company_id'])) {
-			$this->data['company_id'] = $this->session->data['guest']['payment']['company_id'];			
+
+		if (isset($this->session->data['guest']['address'])) {
+			$this->data['address'] = $this->session->data['guest']['address'];
 		} else {
-			$this->data['company_id'] = '';
-		}
-		
-		// Tax ID
-		if (isset($this->session->data['guest']['payment']['tax_id'])) {
-			$this->data['tax_id'] = $this->session->data['guest']['payment']['tax_id'];			
-		} else {
-			$this->data['tax_id'] = '';
-		}
-								
-		if (isset($this->session->data['guest']['payment']['address_1'])) {
-			$this->data['address_1'] = $this->session->data['guest']['payment']['address_1'];			
-		} else {
-			$this->data['address_1'] = '';
+			$this->data['address'] = '';
 		}
 
-		if (isset($this->session->data['guest']['payment']['address_2'])) {
-			$this->data['address_2'] = $this->session->data['guest']['payment']['address_2'];			
-		} else {
-			$this->data['address_2'] = '';
-		}
 
-		if (isset($this->session->data['guest']['payment']['postcode'])) {
-			$this->data['postcode'] = $this->session->data['guest']['payment']['postcode'];							
+		if (isset($this->session->data['guest']['postcode'])) {
+			$this->data['postcode'] = $this->session->data['guest']['postcode'];
 		} elseif (isset($this->session->data['shipping_postcode'])) {
 			$this->data['postcode'] = $this->session->data['shipping_postcode'];			
 		} else {
 			$this->data['postcode'] = '';
 		}
 		
-		if (isset($this->session->data['guest']['payment']['city'])) {
-			$this->data['city'] = $this->session->data['guest']['payment']['city'];			
+		if (isset($this->session->data['guest']['city'])) {
+			$this->data['city'] = $this->session->data['guest']['city'];
 		} else {
 			$this->data['city'] = '';
 		}
 
-		if (isset($this->session->data['guest']['payment']['country_id'])) {
-			$this->data['country_id'] = $this->session->data['guest']['payment']['country_id'];			  	
+		if (isset($this->session->data['guest']['country_id'])) {
+			$this->data['country_id'] = $this->session->data['guest']['country_id'];
 		} elseif (isset($this->session->data['shipping_country_id'])) {
 			$this->data['country_id'] = $this->session->data['shipping_country_id'];		
 		} else {
 			$this->data['country_id'] = $this->config->get('config_country_id');
 		}
 
-		if (isset($this->session->data['guest']['payment']['zone_id'])) {
-			$this->data['zone_id'] = $this->session->data['guest']['payment']['zone_id'];	
+		if (isset($this->session->data['guest']['zone_id'])) {
+			$this->data['zone_id'] = $this->session->data['guest']['zone_id'];
 		} elseif (isset($this->session->data['shipping_zone_id'])) {
 			$this->data['zone_id'] = $this->session->data['shipping_zone_id'];						
 		} else {
@@ -214,21 +195,9 @@ class Guest implements iController {
 			}
 			
 			$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
-				
-			if ($customer_group) {	
-				// Company ID
-				if ($customer_group['company_id_display'] && $customer_group['company_id_required'] && empty($this->request->post['company_id'])) {
-					$json['error']['company_id'] = $this->language->get('error_company_id');
-				}
-				
-				// Tax ID
-				if ($customer_group['tax_id_display'] && $customer_group['tax_id_required'] && empty($this->request->post['tax_id'])) {
-					$json['error']['tax_id'] = $this->language->get('error_tax_id');
-				}						
-			}
-						
-			if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
-				$json['error']['address_1'] = $this->language->get('error_address_1');
+
+			if ((utf8_strlen($this->request->post['address']) < 3) || (utf8_strlen($this->request->post['address']) > 128)) {
+				$json['error']['address'] = $this->language->get('error_address');
 			}
 	
 			if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 128)) {
@@ -243,13 +212,6 @@ class Guest implements iController {
 				if ($country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2) || (utf8_strlen($this->request->post['postcode']) > 10)) {
 					$json['error']['postcode'] = $this->language->get('error_postcode');
 				}
-				
-				// VAT Validation
-				$this->load->helper('vat');
-				
-				if ($this->config->get('config_vat') && $this->request->post['tax_id'] && (vat_validation($country_info['iso_code_2'], $this->request->post['tax_id']) == 'invalid')) {
-					$json['error']['tax_id'] = $this->language->get('error_vat');
-				}					
 			}
 	
 			if ($this->request->post['country_id'] == '') {
@@ -270,12 +232,8 @@ class Guest implements iController {
 			$this->session->data['guest']['fax'] = $this->request->post['fax'];
 			
 			$this->session->data['guest']['payment']['firstname'] = $this->request->post['firstname'];
-			$this->session->data['guest']['payment']['lastname'] = $this->request->post['lastname'];				
-			$this->session->data['guest']['payment']['company'] = $this->request->post['company'];
-			$this->session->data['guest']['payment']['company_id'] = $this->request->post['company_id'];
-			$this->session->data['guest']['payment']['tax_id'] = $this->request->post['tax_id'];
-			$this->session->data['guest']['payment']['address_1'] = $this->request->post['address_1'];
-			$this->session->data['guest']['payment']['address_2'] = $this->request->post['address_2'];
+			$this->session->data['guest']['payment']['lastname'] = $this->request->post['lastname'];
+			$this->session->data['guest']['payment']['address'] = $this->request->post['address'];
 			$this->session->data['guest']['payment']['postcode'] = $this->request->post['postcode'];
 			$this->session->data['guest']['payment']['city'] = $this->request->post['city'];
 			$this->session->data['guest']['payment']['country_id'] = $this->request->post['country_id'];
@@ -296,19 +254,11 @@ class Guest implements iController {
 				$this->session->data['guest']['payment']['iso_code_3'] = '';
 				$this->session->data['guest']['payment']['address_format'] = '';
 			}
-						
+
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
-			
-			if ($zone_info) {
-				$this->session->data['guest']['payment']['zone'] = $zone_info['name'];
-				$this->session->data['guest']['payment']['zone_code'] = $zone_info['code'];
-			} else {
-				$this->session->data['guest']['payment']['zone'] = '';
-				$this->session->data['guest']['payment']['zone_code'] = '';
-			}
-			
+
 			if (!empty($this->request->post['shipping_address'])) {
 				$this->session->data['guest']['shipping_address'] = true;
 			} else {
@@ -322,9 +272,7 @@ class Guest implements iController {
 			if ($this->session->data['guest']['shipping_address']) {
 				$this->session->data['guest']['shipping']['firstname'] = $this->request->post['firstname'];
 				$this->session->data['guest']['shipping']['lastname'] = $this->request->post['lastname'];
-				$this->session->data['guest']['shipping']['company'] = $this->request->post['company'];
-				$this->session->data['guest']['shipping']['address_1'] = $this->request->post['address_1'];
-				$this->session->data['guest']['shipping']['address_2'] = $this->request->post['address_2'];
+				$this->session->data['guest']['shipping']['address'] = $this->request->post['address'];
 				$this->session->data['guest']['shipping']['postcode'] = $this->request->post['postcode'];
 				$this->session->data['guest']['shipping']['city'] = $this->request->post['city'];
 				$this->session->data['guest']['shipping']['country_id'] = $this->request->post['country_id'];

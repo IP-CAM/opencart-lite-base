@@ -15,8 +15,7 @@ class Guest_shipping implements iController {
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 		$this->data['entry_company'] = $this->language->get('entry_company');
-		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
-		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
+		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
 		$this->data['entry_city'] = $this->language->get('entry_city');
 		$this->data['entry_country'] = $this->language->get('entry_country');
@@ -42,16 +41,10 @@ class Guest_shipping implements iController {
 			$this->data['company'] = '';
 		}
 		
-		if (isset($this->session->data['guest']['shipping']['address_1'])) {
-			$this->data['address_1'] = $this->session->data['guest']['shipping']['address_1'];			
+		if (isset($this->session->data['guest']['shipping']['address'])) {
+			$this->data['address'] = $this->session->data['guest']['shipping']['address'];
 		} else {
-			$this->data['address_1'] = '';
-		}
-
-		if (isset($this->session->data['guest']['shipping']['address_2'])) {
-			$this->data['address_2'] = $this->session->data['guest']['shipping']['address_2'];			
-		} else {
-			$this->data['address_2'] = '';
+			$this->data['address'] = '';
 		}
 
 		if (isset($this->session->data['guest']['shipping']['postcode'])) {
@@ -126,16 +119,16 @@ class Guest_shipping implements iController {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 			
-			if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
-				$json['error']['address_1'] = $this->language->get('error_address_1');
+			if ((utf8_strlen($this->request->post['address']) < 3) || (utf8_strlen($this->request->post['address']) > 128)) {
+				$json['error']['address'] = $this->language->get('error_address');
 			}
 	
 			if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 128)) {
 				$json['error']['city'] = $this->language->get('error_city');
 			}
-			
+
 			$this->load->model('localisation/country');
-			
+
 			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 			
 			if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2) || (utf8_strlen($this->request->post['postcode']) > 10)) {
@@ -145,18 +138,16 @@ class Guest_shipping implements iController {
 			if ($this->request->post['country_id'] == '') {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
-			
+
 			if ($this->request->post['zone_id'] == '') {
 				$json['error']['zone'] = $this->language->get('error_zone');
-			}	
+			}
 		}
 		
 		if (!$json) {
 			$this->session->data['guest']['shipping']['firstname'] = trim($this->request->post['firstname']);
 			$this->session->data['guest']['shipping']['lastname'] = trim($this->request->post['lastname']);
-			$this->session->data['guest']['shipping']['company'] = trim($this->request->post['company']);
-			$this->session->data['guest']['shipping']['address_1'] = $this->request->post['address_1'];
-			$this->session->data['guest']['shipping']['address_2'] = $this->request->post['address_2'];
+			$this->session->data['guest']['shipping']['address'] = $this->request->post['address'];
 			$this->session->data['guest']['shipping']['postcode'] = $this->request->post['postcode'];
 			$this->session->data['guest']['shipping']['city'] = $this->request->post['city'];
 			$this->session->data['guest']['shipping']['country_id'] = $this->request->post['country_id'];

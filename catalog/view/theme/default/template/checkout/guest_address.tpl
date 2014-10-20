@@ -54,7 +54,7 @@
     </div>
     <div class="buttons">
         <div class="right">
-            <input type="button" value="<?php echo $button_continue; ?>" id="button-address" class="button" />
+            <input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button" />
         </div>
     </div>
 </fieldset>
