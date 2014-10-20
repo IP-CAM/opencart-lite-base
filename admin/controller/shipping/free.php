@@ -3,7 +3,10 @@
 use Engine\Controller;
 use Engine\iController;
 
-class ControllerShippingFree implements iController {
+class Free implements iController {
+
+    use Controller;
+
 	private $error = array(); 
 	
 	public function index() {   
@@ -25,11 +28,9 @@ class ControllerShippingFree implements iController {
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_total'] = $this->language->get('entry_total');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
@@ -72,12 +73,7 @@ class ControllerShippingFree implements iController {
 			$this->data['free_total'] = $this->config->get('free_total');
 		}
 
-		if (isset($this->request->post['free_geo_zone_id'])) {
-			$this->data['free_geo_zone_id'] = $this->request->post['free_geo_zone_id'];
-		} else {
-			$this->data['free_geo_zone_id'] = $this->config->get('free_geo_zone_id');
-		}
-		
+
 		if (isset($this->request->post['free_status'])) {
 			$this->data['free_status'] = $this->request->post['free_status'];
 		} else {
@@ -89,10 +85,7 @@ class ControllerShippingFree implements iController {
 		} else {
 			$this->data['free_sort_order'] = $this->config->get('free_sort_order');
 		}				
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
 								
 		$this->template = 'shipping/free.tpl';
 		$this->children = array(

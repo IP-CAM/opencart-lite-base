@@ -31,8 +31,6 @@ class Flat implements iController {
 		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_cost'] = $this->language->get('entry_cost');
-		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
@@ -75,18 +73,7 @@ class Flat implements iController {
 			$this->data['flat_cost'] = $this->config->get('flat_cost');
 		}
 
-		if (isset($this->request->post['flat_tax_class_id'])) {
-			$this->data['flat_tax_class_id'] = $this->request->post['flat_tax_class_id'];
-		} else {
-			$this->data['flat_tax_class_id'] = $this->config->get('flat_tax_class_id');
-		}
 
-		if (isset($this->request->post['flat_geo_zone_id'])) {
-			$this->data['flat_geo_zone_id'] = $this->request->post['flat_geo_zone_id'];
-		} else {
-			$this->data['flat_geo_zone_id'] = $this->config->get('flat_geo_zone_id');
-		}
-		
 		if (isset($this->request->post['flat_status'])) {
 			$this->data['flat_status'] = $this->request->post['flat_status'];
 		} else {
@@ -99,14 +86,7 @@ class Flat implements iController {
 			$this->data['flat_sort_order'] = $this->config->get('flat_sort_order');
 		}				
 
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-								
+
 		$this->template = 'shipping/flat.tpl';
 		$this->children = array(
 			'common/header',

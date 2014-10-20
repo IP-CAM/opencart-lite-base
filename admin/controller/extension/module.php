@@ -124,8 +124,8 @@ class Module implements iController {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/' . $this->request->get['extension']);
 			
 			require_once(DIR_APPLICATION . 'controller/module/' . $this->request->get['extension'] . '.php');
-			
-			$class = 'ControllerModule' . str_replace('_', '', $this->request->get['extension']);
+
+            $class = '\Controller\Module\\' . ucfirst($this->request->get['extension']);
 			$class = new $class($this->registry);
 			
 			if (method_exists($class, 'install')) {
@@ -152,8 +152,8 @@ class Module implements iController {
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 		
 			require_once(DIR_APPLICATION . 'controller/module/' . $this->request->get['extension'] . '.php');
-			
-			$class = 'ControllerModule' . str_replace('_', '', $this->request->get['extension']);
+
+            $class = '\Controller\Module\\' . ucfirst($this->request->get['extension']);
 			$class = new $class($this->registry);
 			
 			if (method_exists($class, 'uninstall')) {

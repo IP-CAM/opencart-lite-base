@@ -29,5 +29,5 @@ define('DB_PDO_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
-define('DB_DATABASE', 'opencart-lite');
+define('DB_DATABASE', 'opencart-lite-base');
 define('DB_PREFIX', '');

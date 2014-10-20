@@ -137,8 +137,8 @@ class Payment implements iController {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'payment/' . $this->request->get['extension']);
 
 			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
-			
-			$class = '\Controller\Payment\\' . $this->request->get['extension'];
+
+            $class = '\Controller\Payment\\' . ucfirst($this->request->get['extension']);
 			$class = new $class($this->registry);
 			
 			if (method_exists($class, 'install')) {
@@ -165,8 +165,8 @@ class Payment implements iController {
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 		
 			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
-			
-			$class = '\\Controller\Payment\\' . $this->request->get['extension'];
+
+            $class = '\Controller\Payment\\' . ucfirst($this->request->get['extension']);
 			$class = new $class($this->registry);
 			
 			if (method_exists($class, 'uninstall')) {
