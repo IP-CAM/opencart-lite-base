@@ -330,10 +330,7 @@
   <?php } ?>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
-$('.colorbox').colorbox({
-	overlayClose: true,
-	opacity: 0.5
-});
+    runColorbox();
 //--></script> 
 <script type="text/javascript">
 $('#button-cart').bind('click', function() {

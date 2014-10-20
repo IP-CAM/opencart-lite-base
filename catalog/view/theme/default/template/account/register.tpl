@@ -169,6 +169,8 @@
     </div>
     <!-- end: REGISTER BOX -->
 <script type="text/javascript"><!--
+    runColorbox();
+
         $('select[name=\'country_id\']').bind('change', function() {
             $.ajax({
                 url: 'index.php?route=account/register/country&country_id=' + this.value,
@@ -212,9 +214,4 @@
 
         $('select[name=\'country_id\']').trigger('change');
 //--></script>
-<script type="text/javascript">
-    jQuery(window).ready(function() {
-        Index.init();
-    });
-</script>
 <?php echo $foot; ?>

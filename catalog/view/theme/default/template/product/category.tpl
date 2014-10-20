@@ -42,7 +42,9 @@
   <?php if ($products) { ?>
   <div class="product-filter">
     <div class="display"><b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display('grid');"><?php echo $text_grid; ?></a></div>
-    <div class="limit"><b><?php echo $text_limit; ?></b>
+    <div class="limit col-sm-3 tooltips" data-toggle="tooltip" data-placement="top" title="<?php echo $text_limit; ?>">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-eye"></i></span>
       <select class="form-control" onchange="location = this.value;">
         <?php foreach ($limits as $limits) { ?>
         <?php if ($limits['value'] == $limit) { ?>
@@ -52,8 +54,11 @@
         <?php } ?>
         <?php } ?>
       </select>
+        </div>
     </div>
-    <div class="sort col-md-3"><b><?php echo $text_sort; ?></b>
+    <div class="sort col-md-4 tooltips"  data-toggle="tooltip" data-placement="top" title="<?php echo $text_sort; ?>">
+        <div class="input-group ">
+            <span class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></span>
       <select class="form-control" onchange="location = this.value;">
         <?php foreach ($sorts as $sorts) { ?>
         <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
@@ -63,6 +68,7 @@
         <?php } ?>
         <?php } ?>
       </select>
+    </div>
     </div>
   </div>
   <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>

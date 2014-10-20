@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    runTooltips();
 	/* Search */
 	$('.button-search').bind('click', function() {
 		url = $('base').attr('href') + 'index.php?route=product/search';
@@ -177,3 +178,27 @@ function addToCompare(product_id) {
 		}
 	});
 }
+
+var runTooltips = function() {
+    if($(".tooltips").length) {
+        $('.tooltips').tooltip();
+    }
+};
+
+var runColorbox = function () {
+    $(".group1").colorbox({
+        rel: 'group1',
+        width:"85%"
+    });
+
+    $('.colorbox').colorbox({
+        width: 640,
+        height: 480
+    });
+
+    //ORiginal opencart colorbox code
+    /*$('.colorbox').colorbox({
+        overlayClose: true,
+        opacity: 0.5
+    });*/
+};
