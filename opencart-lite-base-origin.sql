@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.0.4
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 12, 2014 at 08:57 PM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Хост: localhost
+-- Время создания: Окт 20 2014 г., 14:40
+-- Версия сервера: 5.6.12-log
+-- Версия PHP: 5.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,37 +17,41 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `opencart-lite`
+-- База данных: `opencart-lite-base`
 --
+CREATE DATABASE IF NOT EXISTS `opencart-lite-base` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `opencart-lite-base`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `address`
+-- Структура таблицы `address`
 --
 
 CREATE TABLE IF NOT EXISTS `address` (
   `address_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `company` varchar(32) COLLATE utf8_bin NOT NULL,
-  `company_id` varchar(32) COLLATE utf8_bin NOT NULL,
-  `tax_id` varchar(32) COLLATE utf8_bin NOT NULL,
-  `address_1` varchar(128) COLLATE utf8_bin NOT NULL,
-  `address_2` varchar(128) COLLATE utf8_bin NOT NULL,
+  `address` varchar(128) COLLATE utf8_bin NOT NULL,
   `city` varchar(128) COLLATE utf8_bin NOT NULL,
   `postcode` varchar(10) COLLATE utf8_bin NOT NULL,
   `country_id` int(11) NOT NULL DEFAULT '0',
   `zone_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `address`
+--
+
+INSERT INTO `address` (`address_id`, `customer_id`, `company`, `address`, `city`, `postcode`, `country_id`, `zone_id`) VALUES
+(2, 3, 'iouioxx', 'kkkkjjjj', 'kkjkl', '7868', 203, 3081);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `affiliate`
+-- Структура таблицы `affiliate`
 --
 
 CREATE TABLE IF NOT EXISTS `affiliate` (
@@ -61,15 +65,13 @@ CREATE TABLE IF NOT EXISTS `affiliate` (
   `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '',
   `company` varchar(32) COLLATE utf8_bin NOT NULL,
   `website` varchar(255) COLLATE utf8_bin NOT NULL,
-  `address_1` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `address_2` varchar(128) COLLATE utf8_bin NOT NULL,
+  `address` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
   `city` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
   `postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
   `country_id` int(11) NOT NULL,
   `zone_id` int(11) NOT NULL,
   `code` varchar(64) COLLATE utf8_bin NOT NULL,
   `commission` decimal(4,2) NOT NULL DEFAULT '0.00',
-  `tax` varchar(64) COLLATE utf8_bin NOT NULL,
   `payment` varchar(6) COLLATE utf8_bin NOT NULL,
   `cheque` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
   `paypal` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
@@ -88,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `affiliate` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `affiliate_transaction`
+-- Структура таблицы `affiliate_transaction`
 --
 
 CREATE TABLE IF NOT EXISTS `affiliate_transaction` (
@@ -104,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `affiliate_transaction` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attribute`
+-- Структура таблицы `attribute`
 --
 
 CREATE TABLE IF NOT EXISTS `attribute` (
@@ -115,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `attribute` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=12 ;
 
 --
--- Dumping data for table `attribute`
+-- Дамп данных таблицы `attribute`
 --
 
 INSERT INTO `attribute` (`attribute_id`, `attribute_group_id`, `sort_order`) VALUES
@@ -134,7 +136,7 @@ INSERT INTO `attribute` (`attribute_id`, `attribute_group_id`, `sort_order`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attribute_description`
+-- Структура таблицы `attribute_description`
 --
 
 CREATE TABLE IF NOT EXISTS `attribute_description` (
@@ -145,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `attribute_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `attribute_description`
+-- Дамп данных таблицы `attribute_description`
 --
 
 INSERT INTO `attribute_description` (`attribute_id`, `language_id`, `name`) VALUES
@@ -164,7 +166,7 @@ INSERT INTO `attribute_description` (`attribute_id`, `language_id`, `name`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attribute_group`
+-- Структура таблицы `attribute_group`
 --
 
 CREATE TABLE IF NOT EXISTS `attribute_group` (
@@ -174,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `attribute_group` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `attribute_group`
+-- Дамп данных таблицы `attribute_group`
 --
 
 INSERT INTO `attribute_group` (`attribute_group_id`, `sort_order`) VALUES
@@ -186,7 +188,7 @@ INSERT INTO `attribute_group` (`attribute_group_id`, `sort_order`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attribute_group_description`
+-- Структура таблицы `attribute_group_description`
 --
 
 CREATE TABLE IF NOT EXISTS `attribute_group_description` (
@@ -197,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `attribute_group_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `attribute_group_description`
+-- Дамп данных таблицы `attribute_group_description`
 --
 
 INSERT INTO `attribute_group_description` (`attribute_group_id`, `language_id`, `name`) VALUES
@@ -209,7 +211,7 @@ INSERT INTO `attribute_group_description` (`attribute_group_id`, `language_id`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `banner`
+-- Структура таблицы `banner`
 --
 
 CREATE TABLE IF NOT EXISTS `banner` (
@@ -220,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
 
 --
--- Dumping data for table `banner`
+-- Дамп данных таблицы `banner`
 --
 
 INSERT INTO `banner` (`banner_id`, `name`, `status`) VALUES
@@ -231,7 +233,7 @@ INSERT INTO `banner` (`banner_id`, `name`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `banner_image`
+-- Структура таблицы `banner_image`
 --
 
 CREATE TABLE IF NOT EXISTS `banner_image` (
@@ -240,15 +242,15 @@ CREATE TABLE IF NOT EXISTS `banner_image` (
   `link` varchar(255) COLLATE utf8_bin NOT NULL,
   `image` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`banner_image_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=78 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=79 ;
 
 --
--- Dumping data for table `banner_image`
+-- Дамп данных таблицы `banner_image`
 --
 
 INSERT INTO `banner_image` (`banner_image_id`, `banner_id`, `link`, `image`) VALUES
 (54, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/demo/samsung_banner.jpg'),
-(77, 6, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_banner.jpg'),
+(78, 6, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_banner.jpg'),
 (75, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=5', 'data/demo/htc_logo.jpg'),
 (73, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=8', 'data/demo/apple_logo.jpg'),
 (74, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=9', 'data/demo/canon_logo.jpg'),
@@ -259,7 +261,7 @@ INSERT INTO `banner_image` (`banner_image_id`, `banner_id`, `link`, `image`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `banner_image_description`
+-- Структура таблицы `banner_image_description`
 --
 
 CREATE TABLE IF NOT EXISTS `banner_image_description` (
@@ -271,12 +273,12 @@ CREATE TABLE IF NOT EXISTS `banner_image_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `banner_image_description`
+-- Дамп данных таблицы `banner_image_description`
 --
 
 INSERT INTO `banner_image_description` (`banner_image_id`, `language_id`, `banner_id`, `title`) VALUES
 (54, 1, 7, 'Samsung Tab 10.1'),
-(77, 1, 6, 'HP Banner'),
+(78, 1, 6, 'HP Banner'),
 (75, 1, 8, 'HTC'),
 (74, 1, 8, 'Canon'),
 (73, 1, 8, 'Apple'),
@@ -287,7 +289,7 @@ INSERT INTO `banner_image_description` (`banner_image_id`, `language_id`, `banne
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Структура таблицы `category`
 --
 
 CREATE TABLE IF NOT EXISTS `category` (
@@ -304,13 +306,13 @@ CREATE TABLE IF NOT EXISTS `category` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=59 ;
 
 --
--- Dumping data for table `category`
+-- Дамп данных таблицы `category`
 --
 
 INSERT INTO `category` (`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
 (25, '', 0, 1, 1, 3, 1, '2009-01-31 01:04:25', '2011-05-30 12:14:55'),
 (27, '', 20, 0, 0, 2, 1, '2009-01-31 01:55:34', '2010-08-22 06:32:15'),
-(20, 'data/demo/compaq_presario.jpg', 0, 1, 1, 1, 1, '2009-01-05 21:49:43', '2011-07-16 02:14:42'),
+(20, 'data/demo/compaq_presario.jpg', 0, 1, 1, 1, 1, '2009-01-05 21:49:43', '2014-06-13 01:15:42'),
 (24, '', 0, 1, 1, 5, 1, '2009-01-20 02:36:26', '2011-05-30 12:15:18'),
 (18, 'data/demo/hp_2.jpg', 0, 1, 0, 2, 1, '2009-01-05 21:49:15', '2011-05-30 12:13:55'),
 (17, '', 0, 1, 1, 4, 1, '2009-01-03 21:08:57', '2011-05-30 12:15:11'),
@@ -350,7 +352,7 @@ INSERT INTO `category` (`category_id`, `image`, `parent_id`, `top`, `column`, `s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category_description`
+-- Структура таблицы `category_description`
 --
 
 CREATE TABLE IF NOT EXISTS `category_description` (
@@ -365,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `category_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `category_description`
+-- Дамп данных таблицы `category_description`
 --
 
 INSERT INTO `category_description` (`category_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`) VALUES
@@ -411,76 +413,7 @@ INSERT INTO `category_description` (`category_id`, `language_id`, `name`, `descr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category_to_layout`
---
-
-CREATE TABLE IF NOT EXISTS `category_to_layout` (
-  `category_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  `layout_id` int(11) NOT NULL,
-  PRIMARY KEY (`category_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category_to_store`
---
-
-CREATE TABLE IF NOT EXISTS `category_to_store` (
-  `category_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  PRIMARY KEY (`category_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `category_to_store`
---
-
-INSERT INTO `category_to_store` (`category_id`, `store_id`) VALUES
-(17, 0),
-(18, 0),
-(20, 0),
-(24, 0),
-(25, 0),
-(26, 0),
-(27, 0),
-(28, 0),
-(29, 0),
-(30, 0),
-(31, 0),
-(32, 0),
-(33, 0),
-(34, 0),
-(35, 0),
-(36, 0),
-(37, 0),
-(38, 0),
-(39, 0),
-(40, 0),
-(41, 0),
-(42, 0),
-(43, 0),
-(44, 0),
-(45, 0),
-(46, 0),
-(47, 0),
-(48, 0),
-(49, 0),
-(50, 0),
-(51, 0),
-(52, 0),
-(53, 0),
-(54, 0),
-(55, 0),
-(56, 0),
-(57, 0),
-(58, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `country`
+-- Структура таблицы `country`
 --
 
 CREATE TABLE IF NOT EXISTS `country` (
@@ -495,7 +428,7 @@ CREATE TABLE IF NOT EXISTS `country` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=240 ;
 
 --
--- Dumping data for table `country`
+-- Дамп данных таблицы `country`
 --
 
 INSERT INTO `country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `address_format`, `postcode_required`, `status`) VALUES
@@ -742,7 +675,7 @@ INSERT INTO `country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `addres
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coupon`
+-- Структура таблицы `coupon`
 --
 
 CREATE TABLE IF NOT EXISTS `coupon` (
@@ -764,7 +697,7 @@ CREATE TABLE IF NOT EXISTS `coupon` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `coupon`
+-- Дамп данных таблицы `coupon`
 --
 
 INSERT INTO `coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
@@ -775,7 +708,7 @@ INSERT INTO `coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logged`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coupon_history`
+-- Структура таблицы `coupon_history`
 --
 
 CREATE TABLE IF NOT EXISTS `coupon_history` (
@@ -791,7 +724,7 @@ CREATE TABLE IF NOT EXISTS `coupon_history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coupon_product`
+-- Структура таблицы `coupon_product`
 --
 
 CREATE TABLE IF NOT EXISTS `coupon_product` (
@@ -804,7 +737,7 @@ CREATE TABLE IF NOT EXISTS `coupon_product` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `currency`
+-- Структура таблицы `currency`
 --
 
 CREATE TABLE IF NOT EXISTS `currency` (
@@ -821,23 +754,22 @@ CREATE TABLE IF NOT EXISTS `currency` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `currency`
+-- Дамп данных таблицы `currency`
 --
 
 INSERT INTO `currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', '2', 0.61979997, 1, '2011-07-16 10:30:52'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2011-07-16 16:55:46'),
-(3, 'Euro', 'EUR', '', '€', '2', 0.70660001, 1, '2011-07-16 10:30:52');
+(1, 'Pound Sterling', 'GBP', '£', '', '2', 0.61949998, 1, '2014-10-20 14:08:58'),
+(2, 'US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2014-10-20 14:08:58'),
+(3, 'Euro', 'EUR', '', '€', '2', 0.78240001, 1, '2014-10-20 14:08:58');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Структура таблицы `customer`
 --
 
 CREATE TABLE IF NOT EXISTS `customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL DEFAULT '0',
   `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
@@ -848,7 +780,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `cart` text COLLATE utf8_bin,
   `wishlist` text COLLATE utf8_bin,
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
-  `address_id` int(11) NOT NULL DEFAULT '0',
+  `address_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   `ip` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
@@ -856,36 +788,39 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `token` varchar(255) COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`customer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+
+--
+-- Дамп данных таблицы `customer`
+--
+
+INSERT INTO `customer` (`customer_id`, `firstname`, `lastname`, `email`, `telephone`, `fax`, `password`, `salt`, `cart`, `wishlist`, `newsletter`, `address_id`, `customer_group_id`, `ip`, `status`, `approved`, `token`, `date_added`) VALUES
+(3, 'uuu', 'iii', 'ion@ion.com', '6767878', '8888999', '6257b591b2459217e4dcb5eb891d66c2b6710aa7', 'cd3741401', 'a:2:{i:46;i:1;s:43:"47:YToxOntpOjIyNTtzOjEwOiIyMDExLTA0LTIyIjt9";i:1;}', 'a:0:{}', 0, 2, 1, '::1', 1, 1, '', '2014-06-14 00:12:19');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_group`
+-- Структура таблицы `customer_group`
 --
 
 CREATE TABLE IF NOT EXISTS `customer_group` (
   `customer_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `approval` int(1) NOT NULL,
-  `company_id_display` int(1) NOT NULL,
-  `company_id_required` int(1) NOT NULL,
-  `tax_id_display` int(1) NOT NULL,
-  `tax_id_required` int(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`customer_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `customer_group`
+-- Дамп данных таблицы `customer_group`
 --
 
-INSERT INTO `customer_group` (`customer_group_id`, `approval`, `company_id_display`, `company_id_required`, `tax_id_display`, `tax_id_required`, `sort_order`) VALUES
-(1, 0, 1, 0, 0, 1, 1);
+INSERT INTO `customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
+(1, 0, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_group_description`
+-- Структура таблицы `customer_group_description`
 --
 
 CREATE TABLE IF NOT EXISTS `customer_group_description` (
@@ -897,7 +832,7 @@ CREATE TABLE IF NOT EXISTS `customer_group_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `customer_group_description`
+-- Дамп данных таблицы `customer_group_description`
 --
 
 INSERT INTO `customer_group_description` (`customer_group_id`, `language_id`, `name`, `description`) VALUES
@@ -906,7 +841,7 @@ INSERT INTO `customer_group_description` (`customer_group_id`, `language_id`, `n
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_ip`
+-- Структура таблицы `customer_ip`
 --
 
 CREATE TABLE IF NOT EXISTS `customer_ip` (
@@ -916,12 +851,21 @@ CREATE TABLE IF NOT EXISTS `customer_ip` (
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_ip_id`),
   KEY `ip` (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+
+--
+-- Дамп данных таблицы `customer_ip`
+--
+
+INSERT INTO `customer_ip` (`customer_ip_id`, `customer_id`, `ip`, `date_added`) VALUES
+(1, 2, '127.0.0.1', '2014-06-14 00:06:56'),
+(2, 3, '127.0.0.1', '2014-06-14 00:12:20'),
+(3, 3, '::1', '2014-06-17 11:21:13');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_ip_blacklist`
+-- Структура таблицы `customer_ip_blacklist`
 --
 
 CREATE TABLE IF NOT EXISTS `customer_ip_blacklist` (
@@ -934,7 +878,7 @@ CREATE TABLE IF NOT EXISTS `customer_ip_blacklist` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_online`
+-- Структура таблицы `customer_online`
 --
 
 CREATE TABLE IF NOT EXISTS `customer_online` (
@@ -949,7 +893,7 @@ CREATE TABLE IF NOT EXISTS `customer_online` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_reward`
+-- Структура таблицы `customer_reward`
 --
 
 CREATE TABLE IF NOT EXISTS `customer_reward` (
@@ -965,7 +909,7 @@ CREATE TABLE IF NOT EXISTS `customer_reward` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_transaction`
+-- Структура таблицы `customer_transaction`
 --
 
 CREATE TABLE IF NOT EXISTS `customer_transaction` (
@@ -981,7 +925,7 @@ CREATE TABLE IF NOT EXISTS `customer_transaction` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `download`
+-- Структура таблицы `download`
 --
 
 CREATE TABLE IF NOT EXISTS `download` (
@@ -996,7 +940,7 @@ CREATE TABLE IF NOT EXISTS `download` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `download_description`
+-- Структура таблицы `download_description`
 --
 
 CREATE TABLE IF NOT EXISTS `download_description` (
@@ -1009,7 +953,7 @@ CREATE TABLE IF NOT EXISTS `download_description` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `extension`
+-- Структура таблицы `extension`
 --
 
 CREATE TABLE IF NOT EXISTS `extension` (
@@ -1017,30 +961,20 @@ CREATE TABLE IF NOT EXISTS `extension` (
   `type` varchar(32) COLLATE utf8_bin NOT NULL,
   `code` varchar(32) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=428 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=432 ;
 
 --
--- Dumping data for table `extension`
+-- Дамп данных таблицы `extension`
 --
 
 INSERT INTO `extension` (`extension_id`, `type`, `code`) VALUES
-(23, 'payment', 'cod'),
-(22, 'total', 'shipping'),
 (57, 'total', 'sub_total'),
-(58, 'total', 'tax'),
 (59, 'total', 'total'),
 (410, 'module', 'banner'),
 (426, 'module', 'carousel'),
-(390, 'total', 'credit'),
-(387, 'shipping', 'flat'),
-(349, 'total', 'handling'),
-(350, 'total', 'low_order_fee'),
-(389, 'total', 'coupon'),
 (413, 'module', 'category'),
 (411, 'module', 'affiliate'),
 (408, 'module', 'account'),
-(393, 'total', 'reward'),
-(398, 'total', 'voucher'),
 (407, 'payment', 'free_checkout'),
 (427, 'module', 'featured'),
 (419, 'module', 'slideshow');
@@ -1048,30 +982,7 @@ INSERT INTO `extension` (`extension_id`, `type`, `code`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `geo_zone`
---
-
-CREATE TABLE IF NOT EXISTS `geo_zone` (
-  `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`geo_zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `geo_zone`
---
-
-INSERT INTO `geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `date_added`) VALUES
-(3, 'UK VAT Zone', 'UK VAT', '2010-02-26 22:33:24', '2009-01-06 23:26:25'),
-(4, 'UK Shipping', 'UK Shipping Zones', '2010-12-15 15:18:13', '2009-06-23 01:14:53');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `information`
+-- Структура таблицы `information`
 --
 
 CREATE TABLE IF NOT EXISTS `information` (
@@ -1083,7 +994,7 @@ CREATE TABLE IF NOT EXISTS `information` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `information`
+-- Дамп данных таблицы `information`
 --
 
 INSERT INTO `information` (`information_id`, `bottom`, `sort_order`, `status`) VALUES
@@ -1095,7 +1006,7 @@ INSERT INTO `information` (`information_id`, `bottom`, `sort_order`, `status`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `information_description`
+-- Структура таблицы `information_description`
 --
 
 CREATE TABLE IF NOT EXISTS `information_description` (
@@ -1107,7 +1018,7 @@ CREATE TABLE IF NOT EXISTS `information_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `information_description`
+-- Дамп данных таблицы `information_description`
 --
 
 INSERT INTO `information_description` (`information_id`, `language_id`, `title`, `description`) VALUES
@@ -1119,42 +1030,7 @@ INSERT INTO `information_description` (`information_id`, `language_id`, `title`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `information_to_layout`
---
-
-CREATE TABLE IF NOT EXISTS `information_to_layout` (
-  `information_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  `layout_id` int(11) NOT NULL,
-  PRIMARY KEY (`information_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `information_to_store`
---
-
-CREATE TABLE IF NOT EXISTS `information_to_store` (
-  `information_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  PRIMARY KEY (`information_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `information_to_store`
---
-
-INSERT INTO `information_to_store` (`information_id`, `store_id`) VALUES
-(3, 0),
-(4, 0),
-(5, 0),
-(6, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `language`
+-- Структура таблицы `language`
 --
 
 CREATE TABLE IF NOT EXISTS `language` (
@@ -1172,7 +1048,7 @@ CREATE TABLE IF NOT EXISTS `language` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `language`
+-- Дамп данных таблицы `language`
 --
 
 INSERT INTO `language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `filename`, `sort_order`, `status`) VALUES
@@ -1181,7 +1057,7 @@ INSERT INTO `language` (`language_id`, `name`, `code`, `locale`, `image`, `direc
 -- --------------------------------------------------------
 
 --
--- Table structure for table `layout`
+-- Структура таблицы `layout`
 --
 
 CREATE TABLE IF NOT EXISTS `layout` (
@@ -1191,7 +1067,7 @@ CREATE TABLE IF NOT EXISTS `layout` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=12 ;
 
 --
--- Dumping data for table `layout`
+-- Дамп данных таблицы `layout`
 --
 
 INSERT INTO `layout` (`layout_id`, `name`) VALUES
@@ -1210,36 +1086,35 @@ INSERT INTO `layout` (`layout_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `layout_route`
+-- Структура таблицы `layout_route`
 --
 
 CREATE TABLE IF NOT EXISTS `layout_route` (
   `layout_route_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
   `route` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`layout_route_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=32 ;
 
 --
--- Dumping data for table `layout_route`
+-- Дамп данных таблицы `layout_route`
 --
 
-INSERT INTO `layout_route` (`layout_route_id`, `layout_id`, `store_id`, `route`) VALUES
-(30, 6, 0, 'account'),
-(17, 10, 0, 'affiliate/'),
-(29, 3, 0, 'product/category'),
-(26, 1, 0, 'common/home'),
-(20, 2, 0, 'product/product'),
-(24, 11, 0, 'information/information'),
-(22, 5, 0, 'product/manufacturer'),
-(23, 7, 0, 'checkout/'),
-(31, 8, 0, 'information/contact');
+INSERT INTO `layout_route` (`layout_route_id`, `layout_id`, `route`) VALUES
+(30, 6, 'account'),
+(17, 10, 'affiliate/'),
+(29, 3, 'product/category'),
+(26, 1, 'common/home'),
+(20, 2, 'product/product'),
+(24, 11, 'information/information'),
+(22, 5, 'product/manufacturer'),
+(23, 7, 'checkout/'),
+(31, 8, 'information/contact');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `length_class`
+-- Структура таблицы `length_class`
 --
 
 CREATE TABLE IF NOT EXISTS `length_class` (
@@ -1249,7 +1124,7 @@ CREATE TABLE IF NOT EXISTS `length_class` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `length_class`
+-- Дамп данных таблицы `length_class`
 --
 
 INSERT INTO `length_class` (`length_class_id`, `value`) VALUES
@@ -1260,7 +1135,7 @@ INSERT INTO `length_class` (`length_class_id`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `length_class_description`
+-- Структура таблицы `length_class_description`
 --
 
 CREATE TABLE IF NOT EXISTS `length_class_description` (
@@ -1272,7 +1147,7 @@ CREATE TABLE IF NOT EXISTS `length_class_description` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `length_class_description`
+-- Дамп данных таблицы `length_class_description`
 --
 
 INSERT INTO `length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES
@@ -1283,7 +1158,7 @@ INSERT INTO `length_class_description` (`length_class_id`, `language_id`, `title
 -- --------------------------------------------------------
 
 --
--- Table structure for table `manufacturer`
+-- Структура таблицы `manufacturer`
 --
 
 CREATE TABLE IF NOT EXISTS `manufacturer` (
@@ -1295,7 +1170,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `manufacturer`
+-- Дамп данных таблицы `manufacturer`
 --
 
 INSERT INTO `manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VALUES
@@ -1309,31 +1184,7 @@ INSERT INTO `manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `manufacturer_to_store`
---
-
-CREATE TABLE IF NOT EXISTS `manufacturer_to_store` (
-  `manufacturer_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  PRIMARY KEY (`manufacturer_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `manufacturer_to_store`
---
-
-INSERT INTO `manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
-(5, 0),
-(6, 0),
-(7, 0),
-(8, 0),
-(9, 0),
-(10, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `option`
+-- Структура таблицы `option`
 --
 
 CREATE TABLE IF NOT EXISTS `option` (
@@ -1344,7 +1195,7 @@ CREATE TABLE IF NOT EXISTS `option` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=13 ;
 
 --
--- Dumping data for table `option`
+-- Дамп данных таблицы `option`
 --
 
 INSERT INTO `option` (`option_id`, `type`, `sort_order`) VALUES
@@ -1363,7 +1214,7 @@ INSERT INTO `option` (`option_id`, `type`, `sort_order`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `option_description`
+-- Структура таблицы `option_description`
 --
 
 CREATE TABLE IF NOT EXISTS `option_description` (
@@ -1374,7 +1225,7 @@ CREATE TABLE IF NOT EXISTS `option_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `option_description`
+-- Дамп данных таблицы `option_description`
 --
 
 INSERT INTO `option_description` (`option_id`, `language_id`, `name`) VALUES
@@ -1393,7 +1244,7 @@ INSERT INTO `option_description` (`option_id`, `language_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `option_value`
+-- Структура таблицы `option_value`
 --
 
 CREATE TABLE IF NOT EXISTS `option_value` (
@@ -1405,7 +1256,7 @@ CREATE TABLE IF NOT EXISTS `option_value` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=49 ;
 
 --
--- Dumping data for table `option_value`
+-- Дамп данных таблицы `option_value`
 --
 
 INSERT INTO `option_value` (`option_value_id`, `option_id`, `image`, `sort_order`) VALUES
@@ -1427,7 +1278,7 @@ INSERT INTO `option_value` (`option_value_id`, `option_id`, `image`, `sort_order
 -- --------------------------------------------------------
 
 --
--- Table structure for table `option_value_description`
+-- Структура таблицы `option_value_description`
 --
 
 CREATE TABLE IF NOT EXISTS `option_value_description` (
@@ -1439,7 +1290,7 @@ CREATE TABLE IF NOT EXISTS `option_value_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `option_value_description`
+-- Дамп данных таблицы `option_value_description`
 --
 
 INSERT INTO `option_value_description` (`option_value_id`, `language_id`, `option_id`, `name`) VALUES
@@ -1461,14 +1312,13 @@ INSERT INTO `option_value_description` (`option_value_id`, `language_id`, `optio
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
+-- Структура таблицы `order`
 --
 
 CREATE TABLE IF NOT EXISTS `order` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_no` int(11) NOT NULL DEFAULT '0',
   `invoice_prefix` varchar(26) COLLATE utf8_bin NOT NULL,
-  `store_id` int(11) NOT NULL DEFAULT '0',
   `store_name` varchar(64) COLLATE utf8_bin NOT NULL,
   `store_url` varchar(255) COLLATE utf8_bin NOT NULL,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -1478,34 +1328,18 @@ CREATE TABLE IF NOT EXISTS `order` (
   `email` varchar(96) COLLATE utf8_bin NOT NULL,
   `telephone` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `fax` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `payment_firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `payment_lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `payment_company` varchar(32) COLLATE utf8_bin NOT NULL,
-  `payment_company_id` varchar(32) COLLATE utf8_bin NOT NULL,
-  `payment_tax_id` varchar(32) COLLATE utf8_bin NOT NULL,
-  `payment_address_1` varchar(128) COLLATE utf8_bin NOT NULL,
-  `payment_address_2` varchar(128) COLLATE utf8_bin NOT NULL,
-  `payment_city` varchar(128) COLLATE utf8_bin NOT NULL,
-  `payment_postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `payment_country` varchar(128) COLLATE utf8_bin NOT NULL,
-  `payment_country_id` int(11) NOT NULL,
-  `payment_zone` varchar(128) COLLATE utf8_bin NOT NULL,
-  `payment_zone_id` int(11) NOT NULL,
-  `payment_address_format` text COLLATE utf8_bin NOT NULL,
+  `company` varchar(32) COLLATE utf8_bin NOT NULL,
+  `address` varchar(128) COLLATE utf8_bin NOT NULL,
+  `address_id` int(11) NOT NULL,
+  `city` varchar(128) COLLATE utf8_bin NOT NULL,
+  `postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `country` varchar(128) COLLATE utf8_bin NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `zone` varchar(128) COLLATE utf8_bin NOT NULL,
+  `zone_id` int(11) NOT NULL,
+  `address_format` text COLLATE utf8_bin NOT NULL,
   `payment_method` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
   `payment_code` varchar(128) COLLATE utf8_bin NOT NULL,
-  `shipping_firstname` varchar(32) COLLATE utf8_bin NOT NULL,
-  `shipping_lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `shipping_company` varchar(32) COLLATE utf8_bin NOT NULL,
-  `shipping_address_1` varchar(128) COLLATE utf8_bin NOT NULL,
-  `shipping_address_2` varchar(128) COLLATE utf8_bin NOT NULL,
-  `shipping_city` varchar(128) COLLATE utf8_bin NOT NULL,
-  `shipping_postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `shipping_country` varchar(128) COLLATE utf8_bin NOT NULL,
-  `shipping_country_id` int(11) NOT NULL,
-  `shipping_zone` varchar(128) COLLATE utf8_bin NOT NULL,
-  `shipping_zone_id` int(11) NOT NULL,
-  `shipping_address_format` text COLLATE utf8_bin NOT NULL,
   `shipping_method` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
   `shipping_code` varchar(128) COLLATE utf8_bin NOT NULL,
   `comment` text COLLATE utf8_bin NOT NULL,
@@ -1524,12 +1358,20 @@ CREATE TABLE IF NOT EXISTS `order` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
+
+--
+-- Дамп данных таблицы `order`
+--
+
+INSERT INTO `order` (`order_id`, `invoice_no`, `invoice_prefix`, `store_name`, `store_url`, `customer_id`, `customer_group_id`, `firstname`, `lastname`, `email`, `telephone`, `fax`, `company`, `address`, `address_id`, `city`, `postcode`, `country`, `country_id`, `zone`, `zone_id`, `address_format`, `payment_method`, `payment_code`, `shipping_method`, `shipping_code`, `comment`, `total`, `order_status_id`, `affiliate_id`, `commission`, `language_id`, `currency_id`, `currency_code`, `currency_value`, `ip`, `forwarded_ip`, `user_agent`, `accept_language`, `date_added`, `date_modified`) VALUES
+(7, 0, 'INV-2012-00', 'Your Store', 'http://localhost/opencart-lite/', 3, 1, 'uuu', 'iii', 'ion@ion.com', '6767878', '8888999', 'iouio', 'kkkkjjjj', 0, 'kkjkl', '7868', 'Sweden', 203, '&Ouml;rebro', 3084, '', 'Cash On Delivery', 'cod', 'Flat Shipping Rate', 'flat.flat', '', '207.0000', 1, 0, '0.0000', 1, 2, 'USD', '1.00000000', '::1', '', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36', 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4', '2014-06-17 11:21:22', '2014-06-18 17:26:06'),
+(8, 0, 'INV-2012-00', 'Your Store', 'http://localhost/opencart-lite/', 3, 1, 'uuu', 'iii', 'ion@ion.com', '6767878', '8888999', 'iouio', 'kkkkjjjj', 2, 'kkjkl', '7868', 'Sweden', 203, 'Kalmar', 3081, '', 'Cash On Delivery', 'cod', 'Flat Shipping Rate', 'flat.flat', '', '105.0000', 0, 0, '0.0000', 1, 2, 'USD', '1.00000000', '::1', '', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36', 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4', '2014-06-17 11:53:33', '2014-06-17 11:53:33');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_download`
+-- Структура таблицы `order_download`
 --
 
 CREATE TABLE IF NOT EXISTS `order_download` (
@@ -1546,7 +1388,7 @@ CREATE TABLE IF NOT EXISTS `order_download` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_fraud`
+-- Структура таблицы `order_fraud`
 --
 
 CREATE TABLE IF NOT EXISTS `order_fraud` (
@@ -1609,7 +1451,7 @@ CREATE TABLE IF NOT EXISTS `order_fraud` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_history`
+-- Структура таблицы `order_history`
 --
 
 CREATE TABLE IF NOT EXISTS `order_history` (
@@ -1620,12 +1462,20 @@ CREATE TABLE IF NOT EXISTS `order_history` (
   `comment` text COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`order_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `order_history`
+--
+
+INSERT INTO `order_history` (`order_history_id`, `order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES
+(1, 6, 1, 1, '', '2014-06-16 22:24:08'),
+(2, 7, 1, 1, '', '2014-06-17 11:21:40');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_option`
+-- Структура таблицы `order_option`
 --
 
 CREATE TABLE IF NOT EXISTS `order_option` (
@@ -1638,12 +1488,19 @@ CREATE TABLE IF NOT EXISTS `order_option` (
   `value` text COLLATE utf8_bin NOT NULL,
   `type` varchar(32) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`order_option_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+
+--
+-- Дамп данных таблицы `order_option`
+--
+
+INSERT INTO `order_option` (`order_option_id`, `order_id`, `order_product_id`, `product_option_id`, `product_option_value_id`, `name`, `value`, `type`) VALUES
+(1, 8, 8, 225, 0, 'Delivery Date', '2011-04-22', 'date');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_product`
+-- Структура таблицы `order_product`
 --
 
 CREATE TABLE IF NOT EXISTS `order_product` (
@@ -1655,15 +1512,22 @@ CREATE TABLE IF NOT EXISTS `order_product` (
   `quantity` int(4) NOT NULL,
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `reward` int(8) NOT NULL,
   PRIMARY KEY (`order_product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
+
+--
+-- Дамп данных таблицы `order_product`
+--
+
+INSERT INTO `order_product` (`order_product_id`, `order_id`, `product_id`, `name`, `model`, `quantity`, `price`, `total`, `reward`) VALUES
+(7, 7, 40, 'iPhone', 'product 11', 2, '101.0000', '202.0000', 0),
+(8, 8, 47, 'HP LP3065', 'Product 21', 1, '100.0000', '100.0000', 300);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_status`
+-- Структура таблицы `order_status`
 --
 
 CREATE TABLE IF NOT EXISTS `order_status` (
@@ -1674,7 +1538,7 @@ CREATE TABLE IF NOT EXISTS `order_status` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=17 ;
 
 --
--- Dumping data for table `order_status`
+-- Дамп данных таблицы `order_status`
 --
 
 INSERT INTO `order_status` (`order_status_id`, `language_id`, `name`) VALUES
@@ -1696,7 +1560,7 @@ INSERT INTO `order_status` (`order_status_id`, `language_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_total`
+-- Структура таблицы `order_total`
 --
 
 CREATE TABLE IF NOT EXISTS `order_total` (
@@ -1709,12 +1573,24 @@ CREATE TABLE IF NOT EXISTS `order_total` (
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`order_total_id`),
   KEY `idx_orders_total_orders_id` (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=25 ;
+
+--
+-- Дамп данных таблицы `order_total`
+--
+
+INSERT INTO `order_total` (`order_total_id`, `order_id`, `code`, `title`, `text`, `value`, `sort_order`) VALUES
+(20, 7, 'shipping', 'Flat Shipping Rate', '$5.00', '5.0000', 3),
+(19, 7, 'sub_total', 'Sub-Total', '$202.00', '202.0000', 1),
+(22, 8, 'sub_total', 'Sub-Total', '$100.00', '100.0000', 1),
+(23, 8, 'shipping', 'Flat Shipping Rate', '$5.00', '5.0000', 3),
+(24, 8, 'total', 'Total', '$105.00', '105.0000', 9),
+(21, 7, 'total', 'Total', '$207.00', '207.0000', 9);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_voucher`
+-- Структура таблицы `order_voucher`
 --
 
 CREATE TABLE IF NOT EXISTS `order_voucher` (
@@ -1736,7 +1612,7 @@ CREATE TABLE IF NOT EXISTS `order_voucher` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Структура таблицы `product`
 --
 
 CREATE TABLE IF NOT EXISTS `product` (
@@ -1756,7 +1632,6 @@ CREATE TABLE IF NOT EXISTS `product` (
   `shipping` tinyint(1) NOT NULL DEFAULT '1',
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `points` int(8) NOT NULL DEFAULT '0',
-  `tax_class_id` int(11) NOT NULL,
   `date_available` date NOT NULL,
   `weight` decimal(15,8) NOT NULL DEFAULT '0.00000000',
   `weight_class_id` int(11) NOT NULL DEFAULT '0',
@@ -1775,34 +1650,34 @@ CREATE TABLE IF NOT EXISTS `product` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=50 ;
 
 --
--- Dumping data for table `product`
+-- Дамп данных таблицы `product`
 --
 
-INSERT INTO `product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', '', '', '', '', '', '', '', 939, 7, 'data/demo/htc_touch_hd_1.jpg', 5, 1, '100.0000', 200, 9, '2009-02-03', '146.40000000', 2, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 16:06:50', '2011-09-30 01:05:39', 0),
-(29, 'Product 2', '', '', '', '', '', '', '', 999, 6, 'data/demo/palm_treo_pro_1.jpg', 6, 1, '279.9900', 0, 9, '2009-02-03', '133.00000000', 2, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, '2009-02-03 16:42:17', '2011-09-30 01:06:08', 0),
-(30, 'Product 3', '', '', '', '', '', '', '', 7, 6, 'data/demo/canon_eos_5d_1.jpg', 9, 1, '100.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 16:59:00', '2011-09-30 01:05:23', 0),
-(31, 'Product 4', '', '', '', '', '', '', '', 1000, 6, 'data/demo/nikon_d300_1.jpg', 0, 1, '80.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, '2009-02-03 17:00:10', '2011-09-30 01:06:00', 0),
-(32, 'Product 5', '', '', '', '', '', '', '', 999, 6, 'data/demo/ipod_touch_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 17:07:26', '2011-09-30 01:07:22', 0),
-(33, 'Product 6', '', '', '', '', '', '', '', 1000, 6, 'data/demo/samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 17:08:31', '2011-09-30 01:06:29', 0),
-(34, 'Product 7', '', '', '', '', '', '', '', 1000, 6, 'data/demo/ipod_shuffle_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 18:07:54', '2011-09-30 01:07:17', 0),
-(35, 'Product 8', '', '', '', '', '', '', '', 1000, 5, '', 0, 0, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 18:08:31', '2011-09-30 01:06:17', 0),
-(36, 'Product 9', '', '', '', '', '', '', '', 994, 6, 'data/demo/ipod_nano_1.jpg', 8, 0, '100.0000', 100, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 18:09:19', '2011-09-30 01:07:12', 0),
-(40, 'product 11', '', '', '', '', '', '', '', 970, 5, 'data/demo/iphone_1.jpg', 8, 1, '101.0000', 0, 9, '2009-02-03', '10.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 21:07:12', '2011-09-30 01:06:53', 0),
-(41, 'Product 14', '', '', '', '', '', '', '', 977, 5, 'data/demo/imac_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 21:07:26', '2011-09-30 01:06:44', 0),
-(42, 'Product 15', '', '', '', '', '', '', '', 990, 5, 'data/demo/apple_cinema_30.jpg', 8, 1, '100.0000', 400, 9, '2009-02-04', '12.50000000', 1, '1.00000000', '2.00000000', '3.00000000', 1, 1, 2, 0, 1, '2009-02-03 21:07:37', '2011-09-30 00:46:19', 0),
-(43, 'Product 16', '', '', '', '', '', '', '', 929, 5, 'data/demo/macbook_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:07:49', '2011-09-30 01:05:46', 0),
-(44, 'Product 17', '', '', '', '', '', '', '', 1000, 5, 'data/demo/macbook_air_1.jpg', 8, 1, '1000.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:00', '2011-09-30 01:05:53', 0),
-(45, 'Product 18', '', '', '', '', '', '', '', 998, 5, 'data/demo/macbook_pro_1.jpg', 8, 1, '2000.0000', 0, 100, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:17', '2011-09-15 22:22:01', 0),
-(46, 'Product 19', '', '', '', '', '', '', '', 1000, 5, 'data/demo/sony_vaio_1.jpg', 10, 1, '1000.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:29', '2011-09-30 01:06:39', 0),
-(47, 'Product 21', '', '', '', '', '', '', '', 1000, 5, 'data/demo/hp_1.jpg', 7, 1, '100.0000', 400, 9, '2009-02-03', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-09-30 01:05:28', 0),
-(48, 'product 20', 'test 1', '', '', '', '', '', 'test 2', 995, 5, 'data/demo/ipod_classic_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-08', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-09-30 01:07:06', 0),
-(49, 'SAM1', '', '', '', '', '', '', '', 0, 8, 'data/demo/samsung_tab_1.jpg', 0, 1, '199.9900', 0, 9, '2011-04-25', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-09-30 01:06:23', 0);
+INSERT INTO `product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
+(28, 'Product 1', '', '', '', '', '', '', '', 939, 7, 'data/demo/htc_touch_hd_1.jpg', 5, 1, '100.0000', 200, '2009-02-03', '146.40000000', 2, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 16:06:50', '2011-09-30 01:05:39', 1),
+(29, 'Product 2', '', '', '', '', '', '', '', 999, 6, 'data/demo/palm_treo_pro_1.jpg', 6, 1, '279.9900', 0, '2009-02-03', '133.00000000', 2, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, '2009-02-03 16:42:17', '2011-09-30 01:06:08', 2),
+(30, 'Product 3', '', '', '', '', '', '', '', 7, 6, 'data/demo/canon_eos_5d_1.jpg', 9, 1, '100.0000', 0, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 16:59:00', '2011-09-30 01:05:23', 1),
+(31, 'Product 4', '', '', '', '', '', '', '', 1000, 6, 'data/demo/nikon_d300_1.jpg', 0, 1, '80.0000', 0, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, '2009-02-03 17:00:10', '2011-09-30 01:06:00', 1),
+(32, 'Product 5', '', '', '', '', '', '', '', 999, 6, 'data/demo/ipod_touch_1.jpg', 8, 1, '100.0000', 0, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 17:07:26', '2011-09-30 01:07:22', 0),
+(33, 'Product 6', '', '', '', '', '', '', '', 1000, 6, 'data/demo/samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 0, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 17:08:31', '2011-09-30 01:06:29', 0),
+(34, 'Product 7', '', '', '', '', '', '', '', 1000, 6, 'data/demo/ipod_shuffle_1.jpg', 8, 1, '100.0000', 0, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 18:07:54', '2011-09-30 01:07:17', 0),
+(35, 'Product 8', '', '', '', '', '', '', '', 1000, 5, '', 0, 0, '100.0000', 0, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 18:08:31', '2011-09-30 01:06:17', 0),
+(36, 'Product 9', '', '', '', '', '', '', '', 994, 6, 'data/demo/ipod_nano_1.jpg', 8, 0, '100.0000', 100, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 18:09:19', '2011-09-30 01:07:12', 0),
+(40, 'product 11', '', '', '', '', '', '', '', 967, 5, 'data/demo/iphone_1.jpg', 8, 1, '101.0000', 0, '2009-02-03', '10.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 21:07:12', '2011-09-30 01:06:53', 18),
+(41, 'Product 14', '', '', '', '', '', '', '', 977, 5, 'data/demo/imac_1.jpg', 8, 1, '100.0000', 0, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 21:07:26', '2011-09-30 01:06:44', 3),
+(42, 'Product 15', '', '', '', '', '', '', '', 990, 5, 'data/demo/apple_cinema_30.jpg', 8, 1, '100.0000', 400, '2009-02-04', '12.50000000', 1, '1.00000000', '2.00000000', '3.00000000', 1, 1, 2, 0, 1, '2009-02-03 21:07:37', '2011-09-30 00:46:19', 8),
+(43, 'Product 16', '', '', '', '', '', '', '', 929, 5, 'data/demo/macbook_1.jpg', 8, 0, '500.0000', 0, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:07:49', '2011-09-30 01:05:46', 0),
+(44, 'Product 17', '', '', '', '', '', '', '', 1000, 5, 'data/demo/macbook_air_1.jpg', 8, 1, '1000.0000', 0, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:00', '2011-09-30 01:05:53', 0),
+(45, 'Product 18', '', '', '', '', '', '', '', 998, 5, 'data/demo/macbook_pro_1.jpg', 8, 1, '2000.0000', 0, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:17', '2011-09-15 22:22:01', 0),
+(46, 'Product 19', '', '', '', '', '', '', '', 1000, 5, 'data/demo/sony_vaio_1.jpg', 10, 1, '1000.0000', 0, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:29', '2011-09-30 01:06:39', 1),
+(47, 'Product 21', '', '', '', '', '', '', '', 1000, 5, 'data/demo/hp_1.jpg', 7, 1, '100.0000', 400, '2009-02-03', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-09-30 01:05:28', 6),
+(48, 'product 20', 'test 1', '', '', '', '', '', 'test 2', 995, 5, 'data/demo/ipod_classic_1.jpg', 8, 1, '100.0000', 0, '2009-02-08', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-09-30 01:07:06', 1),
+(49, 'SAM1', '', '', '', '', '', '', '', 0, 8, 'data/demo/samsung_tab_1.jpg', 0, 1, '199.9900', 0, '2011-04-25', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-09-30 01:06:23', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_attribute`
+-- Структура таблицы `product_attribute`
 --
 
 CREATE TABLE IF NOT EXISTS `product_attribute` (
@@ -1814,7 +1689,7 @@ CREATE TABLE IF NOT EXISTS `product_attribute` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `product_attribute`
+-- Дамп данных таблицы `product_attribute`
 --
 
 INSERT INTO `product_attribute` (`product_id`, `attribute_id`, `language_id`, `text`) VALUES
@@ -1827,7 +1702,7 @@ INSERT INTO `product_attribute` (`product_id`, `attribute_id`, `language_id`, `t
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_description`
+-- Структура таблицы `product_description`
 --
 
 CREATE TABLE IF NOT EXISTS `product_description` (
@@ -1845,7 +1720,7 @@ CREATE TABLE IF NOT EXISTS `product_description` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=50 ;
 
 --
--- Dumping data for table `product_description`
+-- Дамп данных таблицы `product_description`
 --
 
 INSERT INTO `product_description` (`product_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`, `tag`) VALUES
@@ -1872,7 +1747,7 @@ INSERT INTO `product_description` (`product_id`, `language_id`, `name`, `descrip
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_discount`
+-- Структура таблицы `product_discount`
 --
 
 CREATE TABLE IF NOT EXISTS `product_discount` (
@@ -1889,7 +1764,7 @@ CREATE TABLE IF NOT EXISTS `product_discount` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=441 ;
 
 --
--- Dumping data for table `product_discount`
+-- Дамп данных таблицы `product_discount`
 --
 
 INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `customer_group_id`, `quantity`, `priority`, `price`, `date_start`, `date_end`) VALUES
@@ -1900,7 +1775,7 @@ INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `customer_g
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_image`
+-- Структура таблицы `product_image`
 --
 
 CREATE TABLE IF NOT EXISTS `product_image` (
@@ -1912,7 +1787,7 @@ CREATE TABLE IF NOT EXISTS `product_image` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2352 ;
 
 --
--- Dumping data for table `product_image`
+-- Дамп данных таблицы `product_image`
 --
 
 INSERT INTO `product_image` (`product_image_id`, `product_id`, `image`, `sort_order`) VALUES
@@ -1981,7 +1856,7 @@ INSERT INTO `product_image` (`product_image_id`, `product_id`, `image`, `sort_or
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_option`
+-- Структура таблицы `product_option`
 --
 
 CREATE TABLE IF NOT EXISTS `product_option` (
@@ -1994,7 +1869,7 @@ CREATE TABLE IF NOT EXISTS `product_option` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=227 ;
 
 --
--- Dumping data for table `product_option`
+-- Дамп данных таблицы `product_option`
 --
 
 INSERT INTO `product_option` (`product_option_id`, `product_id`, `option_id`, `option_value`, `required`) VALUES
@@ -2014,7 +1889,7 @@ INSERT INTO `product_option` (`product_option_id`, `product_id`, `option_id`, `o
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_option_value`
+-- Структура таблицы `product_option_value`
 --
 
 CREATE TABLE IF NOT EXISTS `product_option_value` (
@@ -2035,7 +1910,7 @@ CREATE TABLE IF NOT EXISTS `product_option_value` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=17 ;
 
 --
--- Dumping data for table `product_option_value`
+-- Дамп данных таблицы `product_option_value`
 --
 
 INSERT INTO `product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `option_id`, `option_value_id`, `quantity`, `subtract`, `price`, `price_prefix`, `points`, `points_prefix`, `weight`, `weight_prefix`) VALUES
@@ -2059,7 +1934,7 @@ INSERT INTO `product_option_value` (`product_option_value_id`, `product_option_i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_related`
+-- Структура таблицы `product_related`
 --
 
 CREATE TABLE IF NOT EXISTS `product_related` (
@@ -2069,7 +1944,7 @@ CREATE TABLE IF NOT EXISTS `product_related` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `product_related`
+-- Дамп данных таблицы `product_related`
 --
 
 INSERT INTO `product_related` (`product_id`, `related_id`) VALUES
@@ -2081,7 +1956,7 @@ INSERT INTO `product_related` (`product_id`, `related_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_reward`
+-- Структура таблицы `product_reward`
 --
 
 CREATE TABLE IF NOT EXISTS `product_reward` (
@@ -2093,7 +1968,7 @@ CREATE TABLE IF NOT EXISTS `product_reward` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=546 ;
 
 --
--- Dumping data for table `product_reward`
+-- Дамп данных таблицы `product_reward`
 --
 
 INSERT INTO `product_reward` (`product_reward_id`, `product_id`, `customer_group_id`, `points`) VALUES
@@ -2120,7 +1995,7 @@ INSERT INTO `product_reward` (`product_reward_id`, `product_id`, `customer_group
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_special`
+-- Структура таблицы `product_special`
 --
 
 CREATE TABLE IF NOT EXISTS `product_special` (
@@ -2136,7 +2011,7 @@ CREATE TABLE IF NOT EXISTS `product_special` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=440 ;
 
 --
--- Dumping data for table `product_special`
+-- Дамп данных таблицы `product_special`
 --
 
 INSERT INTO `product_special` (`product_special_id`, `product_id`, `customer_group_id`, `priority`, `price`, `date_start`, `date_end`) VALUES
@@ -2147,7 +2022,7 @@ INSERT INTO `product_special` (`product_special_id`, `product_id`, `customer_gro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_to_category`
+-- Структура таблицы `product_to_category`
 --
 
 CREATE TABLE IF NOT EXISTS `product_to_category` (
@@ -2157,7 +2032,7 @@ CREATE TABLE IF NOT EXISTS `product_to_category` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `product_to_category`
+-- Дамп данных таблицы `product_to_category`
 --
 
 INSERT INTO `product_to_category` (`product_id`, `category_id`) VALUES
@@ -2195,7 +2070,7 @@ INSERT INTO `product_to_category` (`product_id`, `category_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_to_download`
+-- Структура таблицы `product_to_download`
 --
 
 CREATE TABLE IF NOT EXISTS `product_to_download` (
@@ -2207,57 +2082,7 @@ CREATE TABLE IF NOT EXISTS `product_to_download` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_to_layout`
---
-
-CREATE TABLE IF NOT EXISTS `product_to_layout` (
-  `product_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  `layout_id` int(11) NOT NULL,
-  PRIMARY KEY (`product_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_to_store`
---
-
-CREATE TABLE IF NOT EXISTS `product_to_store` (
-  `product_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `product_to_store`
---
-
-INSERT INTO `product_to_store` (`product_id`, `store_id`) VALUES
-(28, 0),
-(29, 0),
-(30, 0),
-(31, 0),
-(32, 0),
-(33, 0),
-(34, 0),
-(35, 0),
-(36, 0),
-(40, 0),
-(41, 0),
-(42, 0),
-(43, 0),
-(44, 0),
-(45, 0),
-(46, 0),
-(47, 0),
-(48, 0),
-(49, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `return`
+-- Структура таблицы `return`
 --
 
 CREATE TABLE IF NOT EXISTS `return` (
@@ -2286,7 +2111,7 @@ CREATE TABLE IF NOT EXISTS `return` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `return_action`
+-- Структура таблицы `return_action`
 --
 
 CREATE TABLE IF NOT EXISTS `return_action` (
@@ -2297,7 +2122,7 @@ CREATE TABLE IF NOT EXISTS `return_action` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `return_action`
+-- Дамп данных таблицы `return_action`
 --
 
 INSERT INTO `return_action` (`return_action_id`, `language_id`, `name`) VALUES
@@ -2308,7 +2133,7 @@ INSERT INTO `return_action` (`return_action_id`, `language_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `return_history`
+-- Структура таблицы `return_history`
 --
 
 CREATE TABLE IF NOT EXISTS `return_history` (
@@ -2324,7 +2149,7 @@ CREATE TABLE IF NOT EXISTS `return_history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `return_reason`
+-- Структура таблицы `return_reason`
 --
 
 CREATE TABLE IF NOT EXISTS `return_reason` (
@@ -2335,7 +2160,7 @@ CREATE TABLE IF NOT EXISTS `return_reason` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `return_reason`
+-- Дамп данных таблицы `return_reason`
 --
 
 INSERT INTO `return_reason` (`return_reason_id`, `language_id`, `name`) VALUES
@@ -2348,7 +2173,7 @@ INSERT INTO `return_reason` (`return_reason_id`, `language_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `return_status`
+-- Структура таблицы `return_status`
 --
 
 CREATE TABLE IF NOT EXISTS `return_status` (
@@ -2359,7 +2184,7 @@ CREATE TABLE IF NOT EXISTS `return_status` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `return_status`
+-- Дамп данных таблицы `return_status`
 --
 
 INSERT INTO `return_status` (`return_status_id`, `language_id`, `name`) VALUES
@@ -2370,7 +2195,7 @@ INSERT INTO `return_status` (`return_status_id`, `language_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `review`
+-- Структура таблицы `review`
 --
 
 CREATE TABLE IF NOT EXISTS `review` (
@@ -2390,155 +2215,128 @@ CREATE TABLE IF NOT EXISTS `review` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `setting`
+-- Структура таблицы `setting`
 --
 
 CREATE TABLE IF NOT EXISTS `setting` (
   `setting_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL DEFAULT '0',
   `group` varchar(32) COLLATE utf8_bin NOT NULL,
   `key` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
   `value` text COLLATE utf8_bin NOT NULL,
   `serialized` tinyint(1) NOT NULL,
   PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=130 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=133 ;
 
 --
--- Dumping data for table `setting`
+-- Дамп данных таблицы `setting`
 --
 
-INSERT INTO `setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `serialized`) VALUES
-(1, 0, 'shipping', 'shipping_sort_order', '3', 0),
-(2, 0, 'sub_total', 'sub_total_sort_order', '1', 0),
-(3, 0, 'sub_total', 'sub_total_status', '1', 0),
-(4, 0, 'tax', 'tax_status', '1', 0),
-(5, 0, 'total', 'total_sort_order', '9', 0),
-(6, 0, 'total', 'total_status', '1', 0),
-(7, 0, 'tax', 'tax_sort_order', '5', 0),
-(8, 0, 'free_checkout', 'free_checkout_sort_order', '1', 0),
-(9, 0, 'cod', 'cod_sort_order', '5', 0),
-(10, 0, 'cod', 'cod_total', '0.01', 0),
-(11, 0, 'cod', 'cod_order_status_id', '1', 0),
-(12, 0, 'cod', 'cod_geo_zone_id', '0', 0),
-(13, 0, 'cod', 'cod_status', '1', 0),
-(14, 0, 'shipping', 'shipping_status', '1', 0),
-(15, 0, 'shipping', 'shipping_estimator', '1', 0),
-(16, 0, 'config', 'config_google_analytics', '', 0),
-(17, 0, 'config', 'config_error_filename', 'error.txt', 0),
-(18, 0, 'config', 'config_error_log', '1', 0),
-(19, 0, 'config', 'config_error_display', '1', 0),
-(20, 0, 'config', 'config_compression', '0', 0),
-(129, 0, 'config', 'config_encryption', '6785ff246c23b6924757a4193db67500', 0),
-(22, 0, 'config', 'config_maintenance', '0', 0),
-(23, 0, 'config', 'config_account_mail', '0', 0),
-(24, 0, 'config', 'config_alert_emails', '', 0),
-(25, 0, 'config', 'config_use_ssl', '0', 0),
-(26, 0, 'config', 'config_seo_url', '0', 0),
-(27, 0, 'coupon', 'coupon_sort_order', '4', 0),
-(28, 0, 'coupon', 'coupon_status', '1', 0),
-(29, 0, 'config', 'config_alert_mail', '0', 0),
-(30, 0, 'config', 'config_smtp_username', '', 0),
-(31, 0, 'config', 'config_smtp_password', '', 0),
-(32, 0, 'config', 'config_smtp_port', '25', 0),
-(33, 0, 'config', 'config_smtp_timeout', '5', 0),
-(34, 0, 'flat', 'flat_sort_order', '1', 0),
-(35, 0, 'flat', 'flat_status', '1', 0),
-(36, 0, 'flat', 'flat_geo_zone_id', '0', 0),
-(37, 0, 'flat', 'flat_tax_class_id', '9', 0),
-(38, 0, 'carousel', 'carousel_module', 'a:1:{i:0;a:9:{s:9:"banner_id";s:1:"8";s:5:"limit";s:1:"5";s:6:"scroll";s:1:"3";s:5:"width";s:2:"80";s:6:"height";s:2:"80";s:9:"layout_id";s:1:"1";s:8:"position";s:14:"content_bottom";s:6:"status";s:1:"1";s:10:"sort_order";s:2:"-1";}}', 1),
-(39, 0, 'featured', 'featured_product', '43,40,42,49,46,47,28', 0),
-(40, 0, 'featured', 'featured_module', 'a:1:{i:0;a:7:{s:5:"limit";s:1:"6";s:11:"image_width";s:2:"80";s:12:"image_height";s:2:"80";s:9:"layout_id";s:1:"1";s:8:"position";s:11:"content_top";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"2";}}', 1),
-(41, 0, 'flat', 'flat_cost', '5.00', 0),
-(42, 0, 'credit', 'credit_sort_order', '7', 0),
-(43, 0, 'credit', 'credit_status', '1', 0),
-(44, 0, 'config', 'config_smtp_host', '', 0),
-(45, 0, 'config', 'config_image_cart_height', '47', 0),
-(46, 0, 'config', 'config_mail_protocol', 'mail', 0),
-(47, 0, 'config', 'config_mail_parameter', '', 0),
-(48, 0, 'config', 'config_image_wishlist_height', '47', 0),
-(49, 0, 'config', 'config_image_cart_width', '47', 0),
-(50, 0, 'config', 'config_image_wishlist_width', '47', 0),
-(51, 0, 'config', 'config_image_compare_height', '90', 0),
-(52, 0, 'config', 'config_image_compare_width', '90', 0),
-(53, 0, 'reward', 'reward_sort_order', '2', 0),
-(54, 0, 'reward', 'reward_status', '1', 0),
-(55, 0, 'config', 'config_image_related_height', '80', 0),
-(56, 0, 'affiliate', 'affiliate_module', 'a:1:{i:0;a:4:{s:9:"layout_id";s:2:"10";s:8:"position";s:12:"column_right";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
-(57, 0, 'category', 'category_module', 'a:2:{i:0;a:5:{s:9:"layout_id";s:1:"3";s:8:"position";s:11:"column_left";s:5:"count";s:1:"0";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}i:1;a:5:{s:9:"layout_id";s:1:"2";s:8:"position";s:11:"column_left";s:5:"count";s:1:"0";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
-(58, 0, 'config', 'config_image_related_width', '80', 0),
-(59, 0, 'config', 'config_image_additional_height', '74', 0),
-(60, 0, 'account', 'account_module', 'a:1:{i:0;a:4:{s:9:"layout_id";s:1:"6";s:8:"position";s:12:"column_right";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
-(61, 0, 'config', 'config_image_additional_width', '74', 0),
-(62, 0, 'config', 'config_image_manufacturer_height', '80', 0),
-(63, 0, 'config', 'config_image_manufacturer_width', '80', 0),
-(64, 0, 'config', 'config_image_category_height', '80', 0),
-(65, 0, 'config', 'config_image_category_width', '80', 0),
-(66, 0, 'config', 'config_image_product_height', '80', 0),
-(67, 0, 'config', 'config_image_product_width', '80', 0),
-(68, 0, 'config', 'config_image_popup_height', '500', 0),
-(69, 0, 'config', 'config_image_popup_width', '500', 0),
-(70, 0, 'config', 'config_image_thumb_height', '228', 0),
-(71, 0, 'config', 'config_image_thumb_width', '228', 0),
-(72, 0, 'config', 'config_icon', 'data/cart.png', 0),
-(73, 0, 'config', 'config_logo', 'data/logo.png', 0),
-(74, 0, 'config', 'config_cart_weight', '1', 0),
-(75, 0, 'config', 'config_upload_allowed', 'jpg, JPG, jpeg, gif, png, txt', 0),
-(76, 0, 'config', 'config_review_status', '1', 0),
-(77, 0, 'config', 'config_download', '1', 0),
-(78, 0, 'config', 'config_return_status_id', '2', 0),
-(79, 0, 'config', 'config_complete_status_id', '5', 0),
-(80, 0, 'config', 'config_order_status_id', '1', 0),
-(81, 0, 'config', 'config_stock_status_id', '5', 0),
-(82, 0, 'config', 'config_stock_checkout', '0', 0),
-(83, 0, 'config', 'config_stock_warning', '0', 0),
-(84, 0, 'config', 'config_stock_display', '0', 0),
-(85, 0, 'config', 'config_commission', '5', 0),
-(86, 0, 'config', 'config_affiliate_id', '4', 0),
-(87, 0, 'config', 'config_checkout_id', '5', 0),
-(88, 0, 'config', 'config_guest_checkout', '1', 0),
-(89, 0, 'config', 'config_account_id', '3', 0),
-(91, 0, 'config', 'config_customer_price', '0', 0),
-(92, 0, 'config', 'config_customer_group_id', '1', 0),
-(93, 0, 'voucher', 'voucher_sort_order', '8', 0),
-(94, 0, 'voucher', 'voucher_status', '1', 0),
-(95, 0, 'config', 'config_length_class_id', '1', 0),
-(96, 0, 'config', 'config_invoice_prefix', 'INV-2012-00', 0),
-(97, 0, 'config', 'config_tax', '1', 0),
-(98, 0, 'config', 'config_tax_customer', 'shipping', 0),
-(99, 0, 'config', 'config_tax_default', 'shipping', 0),
-(100, 0, 'config', 'config_admin_limit', '20', 0),
-(101, 0, 'config', 'config_catalog_limit', '15', 0),
-(102, 0, 'free_checkout', 'free_checkout_status', '1', 0),
-(103, 0, 'free_checkout', 'free_checkout_order_status_id', '1', 0),
-(104, 0, 'config', 'config_weight_class_id', '1', 0),
-(105, 0, 'config', 'config_currency_auto', '1', 0),
-(106, 0, 'config', 'config_currency', 'USD', 0),
-(107, 0, 'slideshow', 'slideshow_module', 'a:1:{i:0;a:7:{s:9:"banner_id";s:1:"7";s:5:"width";s:3:"980";s:6:"height";s:3:"280";s:9:"layout_id";s:1:"1";s:8:"position";s:11:"content_top";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
-(108, 0, 'banner', 'banner_module', 'a:1:{i:0;a:7:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"182";s:6:"height";s:3:"182";s:9:"layout_id";s:1:"3";s:8:"position";s:11:"column_left";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"3";}}', 1),
-(109, 0, 'config', 'config_name', 'Your Store', 0),
-(110, 0, 'config', 'config_owner', 'Your Name', 0),
-(111, 0, 'config', 'config_address', 'Address 1', 0),
-(127, 0, 'config', 'config_email', 'opencart.lite@gmail.com', 0),
-(113, 0, 'config', 'config_telephone', '123456789', 0),
-(114, 0, 'config', 'config_fax', '', 0),
-(115, 0, 'config', 'config_title', 'Your Store', 0),
-(116, 0, 'config', 'config_meta_description', 'My Store', 0),
-(117, 0, 'config', 'config_template', 'default', 0),
-(118, 0, 'config', 'config_layout_id', '4', 0),
-(119, 0, 'config', 'config_country_id', '222', 0),
-(120, 0, 'config', 'config_zone_id', '3563', 0),
-(121, 0, 'config', 'config_language', 'en', 0),
-(122, 0, 'config', 'config_admin_language', 'en', 0),
-(123, 0, 'config', 'config_order_edit', '100', 0),
-(124, 0, 'config', 'config_voucher_min', '1', 0),
-(125, 0, 'config', 'config_voucher_max', '1000', 0),
-(126, 0, 'config', 'config_customer_group_display', 'a:1:{i:0;s:1:"1";}', 1),
-(128, 0, 'config', 'config_url', 'http://localhost/opencart-lite/', 0);
+INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`, `serialized`) VALUES
+(2, 'sub_total', 'sub_total_sort_order', '1', 0),
+(3, 'sub_total', 'sub_total_status', '1', 0),
+(5, 'total', 'total_sort_order', '9', 0),
+(6, 'total', 'total_status', '1', 0),
+(8, 'free_checkout', 'free_checkout_sort_order', '1', 0),
+(16, 'config', 'config_google_analytics', '', 0),
+(17, 'config', 'config_error_filename', 'error.txt', 0),
+(18, 'config', 'config_error_log', '1', 0),
+(19, 'config', 'config_error_display', '1', 0),
+(20, 'config', 'config_compression', '0', 0),
+(129, 'config', 'config_encryption', '6785ff246c23b6924757a4193db67500', 0),
+(22, 'config', 'config_maintenance', '0', 0),
+(23, 'config', 'config_account_mail', '0', 0),
+(24, 'config', 'config_alert_emails', '', 0),
+(25, 'config', 'config_use_ssl', '0', 0),
+(26, 'config', 'config_seo_url', '0', 0),
+(29, 'config', 'config_alert_mail', '0', 0),
+(30, 'config', 'config_smtp_username', '', 0),
+(31, 'config', 'config_smtp_password', '', 0),
+(32, 'config', 'config_smtp_port', '25', 0),
+(33, 'config', 'config_smtp_timeout', '5', 0),
+(38, 'carousel', 'carousel_module', 'a:1:{i:0;a:9:{s:9:"banner_id";s:1:"8";s:5:"limit";s:1:"5";s:6:"scroll";s:1:"3";s:5:"width";s:2:"80";s:6:"height";s:2:"80";s:9:"layout_id";s:1:"1";s:8:"position";s:14:"content_bottom";s:6:"status";s:1:"1";s:10:"sort_order";s:2:"-1";}}', 1),
+(39, 'featured', 'featured_product', '43,40,42,49,46,47,28', 0),
+(40, 'featured', 'featured_module', 'a:1:{i:0;a:7:{s:5:"limit";s:1:"6";s:11:"image_width";s:2:"80";s:12:"image_height";s:2:"80";s:9:"layout_id";s:1:"1";s:8:"position";s:11:"content_top";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"2";}}', 1),
+(44, 'config', 'config_smtp_host', '', 0),
+(45, 'config', 'config_image_cart_height', '47', 0),
+(46, 'config', 'config_mail_protocol', 'mail', 0),
+(47, 'config', 'config_mail_parameter', '', 0),
+(48, 'config', 'config_image_wishlist_height', '47', 0),
+(49, 'config', 'config_image_cart_width', '47', 0),
+(50, 'config', 'config_image_wishlist_width', '47', 0),
+(51, 'config', 'config_image_compare_height', '90', 0),
+(52, 'config', 'config_image_compare_width', '90', 0),
+(55, 'config', 'config_image_related_height', '80', 0),
+(56, 'affiliate', 'affiliate_module', 'a:1:{i:0;a:4:{s:9:"layout_id";s:2:"10";s:8:"position";s:12:"column_right";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
+(57, 'category', 'category_module', 'a:2:{i:0;a:5:{s:9:"layout_id";s:1:"3";s:8:"position";s:11:"column_left";s:5:"count";s:1:"0";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}i:1;a:5:{s:9:"layout_id";s:1:"2";s:8:"position";s:11:"column_left";s:5:"count";s:1:"0";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
+(58, 'config', 'config_image_related_width', '80', 0),
+(59, 'config', 'config_image_additional_height', '74', 0),
+(60, 'account', 'account_module', 'a:1:{i:0;a:4:{s:9:"layout_id";s:1:"6";s:8:"position";s:12:"column_right";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
+(61, 'config', 'config_image_additional_width', '74', 0),
+(62, 'config', 'config_image_manufacturer_height', '80', 0),
+(63, 'config', 'config_image_manufacturer_width', '80', 0),
+(64, 'config', 'config_image_category_height', '80', 0),
+(65, 'config', 'config_image_category_width', '80', 0),
+(66, 'config', 'config_image_product_height', '80', 0),
+(67, 'config', 'config_image_product_width', '80', 0),
+(68, 'config', 'config_image_popup_height', '500', 0),
+(69, 'config', 'config_image_popup_width', '500', 0),
+(70, 'config', 'config_image_thumb_height', '228', 0),
+(71, 'config', 'config_image_thumb_width', '228', 0),
+(72, 'config', 'config_icon', 'data/cart.png', 0),
+(73, 'config', 'config_logo', 'data/logo.png', 0),
+(74, 'config', 'config_cart_weight', '1', 0),
+(75, 'config', 'config_upload_allowed', 'jpg, JPG, jpeg, gif, png, txt', 0),
+(76, 'config', 'config_review_status', '1', 0),
+(77, 'config', 'config_download', '1', 0),
+(78, 'config', 'config_return_status_id', '2', 0),
+(79, 'config', 'config_complete_status_id', '5', 0),
+(80, 'config', 'config_order_status_id', '1', 0),
+(81, 'config', 'config_stock_status_id', '5', 0),
+(82, 'config', 'config_stock_checkout', '0', 0),
+(83, 'config', 'config_stock_warning', '0', 0),
+(84, 'config', 'config_stock_display', '0', 0),
+(85, 'config', 'config_commission', '5', 0),
+(86, 'config', 'config_affiliate_id', '4', 0),
+(87, 'config', 'config_checkout_id', '5', 0),
+(88, 'config', 'config_guest_checkout', '1', 0),
+(89, 'config', 'config_account_id', '3', 0),
+(91, 'config', 'config_customer_price', '0', 0),
+(92, 'config', 'config_customer_group_id', '1', 0),
+(95, 'config', 'config_length_class_id', '1', 0),
+(96, 'config', 'config_invoice_prefix', 'INV-2012-00', 0),
+(100, 'config', 'config_admin_limit', '20', 0),
+(101, 'config', 'config_catalog_limit', '15', 0),
+(102, 'free_checkout', 'free_checkout_status', '1', 0),
+(103, 'free_checkout', 'free_checkout_order_status_id', '1', 0),
+(104, 'config', 'config_weight_class_id', '1', 0),
+(105, 'config', 'config_currency_auto', '1', 0),
+(106, 'config', 'config_currency', 'USD', 0),
+(107, 'slideshow', 'slideshow_module', 'a:1:{i:0;a:7:{s:9:"banner_id";s:1:"7";s:5:"width";s:3:"980";s:6:"height";s:3:"280";s:9:"layout_id";s:1:"1";s:8:"position";s:11:"content_top";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"1";}}', 1),
+(108, 'banner', 'banner_module', 'a:1:{i:0;a:7:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"182";s:6:"height";s:3:"182";s:9:"layout_id";s:1:"3";s:8:"position";s:11:"column_left";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"3";}}', 1),
+(109, 'config', 'config_name', 'Your Store', 0),
+(110, 'config', 'config_owner', 'Your Name', 0),
+(111, 'config', 'config_address', 'Address 1', 0),
+(127, 'config', 'config_email', 'opencart.lite@gmail.com', 0),
+(113, 'config', 'config_telephone', '123456789', 0),
+(114, 'config', 'config_fax', '', 0),
+(115, 'config', 'config_title', 'Your Store', 0),
+(116, 'config', 'config_meta_description', 'My Store', 0),
+(117, 'config', 'config_template', 'default', 0),
+(118, 'config', 'config_layout_id', '4', 0),
+(119, 'config', 'config_country_id', '222', 0),
+(120, 'config', 'config_zone_id', '3563', 0),
+(121, 'config', 'config_language', 'en', 0),
+(122, 'config', 'config_admin_language', 'en', 0),
+(123, 'config', 'config_order_edit', '100', 0),
+(124, 'config', 'config_voucher_min', '1', 0),
+(125, 'config', 'config_voucher_max', '1000', 0),
+(126, 'config', 'config_customer_group_display', 'a:1:{i:0;s:1:"1";}', 1),
+(128, 'config', 'config_url', 'http://localhost/opencart-lite/', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock_status`
+-- Структура таблицы `stock_status`
 --
 
 CREATE TABLE IF NOT EXISTS `stock_status` (
@@ -2549,7 +2347,7 @@ CREATE TABLE IF NOT EXISTS `stock_status` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
 
 --
--- Dumping data for table `stock_status`
+-- Дамп данных таблицы `stock_status`
 --
 
 INSERT INTO `stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
@@ -2561,114 +2359,7 @@ INSERT INTO `stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `store`
---
-
-CREATE TABLE IF NOT EXISTS `store` (
-  `store_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `url` varchar(255) COLLATE utf8_bin NOT NULL,
-  `ssl` varchar(255) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tax_class`
---
-
-CREATE TABLE IF NOT EXISTS `tax_class` (
-  `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`tax_class_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
-
---
--- Dumping data for table `tax_class`
---
-
-INSERT INTO `tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
-(9, 'Taxable Goods', 'Taxed Stuff', '2009-01-06 23:21:53', '2011-09-23 14:07:50'),
-(10, 'Downloadable Products', 'Downloadable', '2011-09-21 22:19:39', '2011-09-22 10:27:36');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tax_rate`
---
-
-CREATE TABLE IF NOT EXISTS `tax_rate` (
-  `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT,
-  `geo_zone_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(32) COLLATE utf8_bin NOT NULL,
-  `rate` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `type` char(1) COLLATE utf8_bin NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`tax_rate_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=88 ;
-
---
--- Dumping data for table `tax_rate`
---
-
-INSERT INTO `tax_rate` (`tax_rate_id`, `geo_zone_id`, `name`, `rate`, `type`, `date_added`, `date_modified`) VALUES
-(86, 3, 'VAT (17.5%)', '17.5000', 'P', '2011-03-09 21:17:10', '2011-09-22 22:24:29'),
-(87, 3, 'Eco Tax (-2.00)', '2.0000', 'F', '2011-09-21 21:49:23', '2011-09-23 00:40:19');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tax_rate_to_customer_group`
---
-
-CREATE TABLE IF NOT EXISTS `tax_rate_to_customer_group` (
-  `tax_rate_id` int(11) NOT NULL,
-  `customer_group_id` int(11) NOT NULL,
-  PRIMARY KEY (`tax_rate_id`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `tax_rate_to_customer_group`
---
-
-INSERT INTO `tax_rate_to_customer_group` (`tax_rate_id`, `customer_group_id`) VALUES
-(86, 1),
-(87, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tax_rule`
---
-
-CREATE TABLE IF NOT EXISTS `tax_rule` (
-  `tax_rule_id` int(11) NOT NULL AUTO_INCREMENT,
-  `tax_class_id` int(11) NOT NULL,
-  `tax_rate_id` int(11) NOT NULL,
-  `based` varchar(10) COLLATE utf8_bin NOT NULL,
-  `priority` int(5) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`tax_rule_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=129 ;
-
---
--- Dumping data for table `tax_rule`
---
-
-INSERT INTO `tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`, `priority`) VALUES
-(121, 10, 86, 'payment', 1),
-(120, 10, 87, 'store', 0),
-(128, 9, 86, 'shipping', 1),
-(127, 9, 87, 'shipping', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `url_alias`
+-- Структура таблицы `url_alias`
 --
 
 CREATE TABLE IF NOT EXISTS `url_alias` (
@@ -2676,18 +2367,18 @@ CREATE TABLE IF NOT EXISTS `url_alias` (
   `query` varchar(255) COLLATE utf8_bin NOT NULL,
   `keyword` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`url_alias_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=774 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=778 ;
 
 --
--- Dumping data for table `url_alias`
+-- Дамп данных таблицы `url_alias`
 --
 
 INSERT INTO `url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 (704, 'product_id=48', 'ipod_classic'),
-(773, 'category_id=20', 'desktops'),
+(776, 'category_id=20', 'desktops'),
 (503, 'category_id=26', 'pc'),
 (505, 'category_id=27', 'mac'),
-(730, 'manufacturer_id=8', 'apple'),
+(777, 'manufacturer_id=8', 'apple'),
 (772, 'information_id=4', 'about_us'),
 (768, 'product_id=42', 'test'),
 (767, 'category_id=34', 'mp3-players'),
@@ -2696,7 +2387,7 @@ INSERT INTO `url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Структура таблицы `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -2716,16 +2407,16 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `user`
+-- Дамп данных таблицы `user`
 --
 
 INSERT INTO `user` (`user_id`, `user_group_id`, `username`, `password`, `salt`, `firstname`, `lastname`, `email`, `code`, `ip`, `status`, `date_added`) VALUES
-(1, 1, 'admin', 'c9559329aaa3711927a3abc0daab626609a16c51', 'b5ec78baa', '', '', 'opencart.lite@gmail.com', '', '', 1, '2014-06-12 21:55:56');
+(1, 1, 'admin', 'c9559329aaa3711927a3abc0daab626609a16c51', 'b5ec78baa', '', '', 'opencart.lite@gmail.com', '', '::1', 1, '2014-06-12 21:55:56');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_group`
+-- Структура таблицы `user_group`
 --
 
 CREATE TABLE IF NOT EXISTS `user_group` (
@@ -2736,17 +2427,17 @@ CREATE TABLE IF NOT EXISTS `user_group` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `user_group`
+-- Дамп данных таблицы `user_group`
 --
 
 INSERT INTO `user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:121:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:21:"localisation/tax_rate";i:31;s:25:"localisation/weight_class";i:32;s:17:"localisation/zone";i:33;s:14:"module/account";i:34;s:16:"module/affiliate";i:35;s:13:"module/banner";i:36;s:17:"module/bestseller";i:37;s:15:"module/carousel";i:38;s:15:"module/category";i:39;s:15:"module/featured";i:40;s:18:"module/google_talk";i:41;s:18:"module/information";i:42;s:13:"module/latest";i:43;s:16:"module/slideshow";i:44;s:14:"module/special";i:45;s:12:"module/store";i:46;s:14:"module/welcome";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:22:"payment/klarna_invoice";i:53;s:17:"payment/klarna_pp";i:54;s:14:"payment/liqpay";i:55;s:20:"payment/moneybookers";i:56;s:14:"payment/nochex";i:57;s:15:"payment/paymate";i:58;s:16:"payment/paypoint";i:59;s:13:"payment/payza";i:60;s:26:"payment/perpetual_payments";i:61;s:14:"payment/pp_pro";i:62;s:17:"payment/pp_pro_uk";i:63;s:19:"payment/pp_standard";i:64;s:15:"payment/sagepay";i:65;s:22:"payment/sagepay_direct";i:66;s:18:"payment/sagepay_us";i:67;s:19:"payment/twocheckout";i:68;s:28:"payment/web_payment_software";i:69;s:16:"payment/worldpay";i:70;s:27:"report/affiliate_commission";i:71;s:22:"report/customer_credit";i:72;s:22:"report/customer_online";i:73;s:21:"report/customer_order";i:74;s:22:"report/customer_reward";i:75;s:24:"report/product_purchased";i:76;s:21:"report/product_viewed";i:77;s:18:"report/sale_coupon";i:78;s:17:"report/sale_order";i:79;s:18:"report/sale_return";i:80;s:20:"report/sale_shipping";i:81;s:15:"report/sale_tax";i:82;s:14:"sale/affiliate";i:83;s:12:"sale/contact";i:84;s:11:"sale/coupon";i:85;s:13:"sale/customer";i:86;s:23:"sale/customer_blacklist";i:87;s:19:"sale/customer_group";i:88;s:10:"sale/order";i:89;s:11:"sale/return";i:90;s:12:"sale/voucher";i:91;s:18:"sale/voucher_theme";i:92;s:15:"setting/setting";i:93;s:13:"setting/store";i:94;s:16:"shipping/auspost";i:95;s:17:"shipping/citylink";i:96;s:14:"shipping/fedex";i:97;s:13:"shipping/flat";i:98;s:13:"shipping/free";i:99;s:13:"shipping/item";i:100;s:23:"shipping/parcelforce_48";i:101;s:15:"shipping/pickup";i:102;s:19:"shipping/royal_mail";i:103;s:12:"shipping/ups";i:104;s:13:"shipping/usps";i:105;s:15:"shipping/weight";i:106;s:11:"tool/backup";i:107;s:14:"tool/error_log";i:108;s:12:"total/coupon";i:109;s:12:"total/credit";i:110;s:14:"total/handling";i:111;s:16:"total/klarna_fee";i:112;s:19:"total/low_order_fee";i:113;s:12:"total/reward";i:114;s:14:"total/shipping";i:115;s:15:"total/sub_total";i:116;s:9:"total/tax";i:117;s:11:"total/total";i:118;s:13:"total/voucher";i:119;s:9:"user/user";i:120;s:20:"user/user_permission";}s:6:"modify";a:121:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:21:"localisation/tax_rate";i:31;s:25:"localisation/weight_class";i:32;s:17:"localisation/zone";i:33;s:14:"module/account";i:34;s:16:"module/affiliate";i:35;s:13:"module/banner";i:36;s:17:"module/bestseller";i:37;s:15:"module/carousel";i:38;s:15:"module/category";i:39;s:15:"module/featured";i:40;s:18:"module/google_talk";i:41;s:18:"module/information";i:42;s:13:"module/latest";i:43;s:16:"module/slideshow";i:44;s:14:"module/special";i:45;s:12:"module/store";i:46;s:14:"module/welcome";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:22:"payment/klarna_invoice";i:53;s:17:"payment/klarna_pp";i:54;s:14:"payment/liqpay";i:55;s:20:"payment/moneybookers";i:56;s:14:"payment/nochex";i:57;s:15:"payment/paymate";i:58;s:16:"payment/paypoint";i:59;s:13:"payment/payza";i:60;s:26:"payment/perpetual_payments";i:61;s:14:"payment/pp_pro";i:62;s:17:"payment/pp_pro_uk";i:63;s:19:"payment/pp_standard";i:64;s:15:"payment/sagepay";i:65;s:22:"payment/sagepay_direct";i:66;s:18:"payment/sagepay_us";i:67;s:19:"payment/twocheckout";i:68;s:28:"payment/web_payment_software";i:69;s:16:"payment/worldpay";i:70;s:27:"report/affiliate_commission";i:71;s:22:"report/customer_credit";i:72;s:22:"report/customer_online";i:73;s:21:"report/customer_order";i:74;s:22:"report/customer_reward";i:75;s:24:"report/product_purchased";i:76;s:21:"report/product_viewed";i:77;s:18:"report/sale_coupon";i:78;s:17:"report/sale_order";i:79;s:18:"report/sale_return";i:80;s:20:"report/sale_shipping";i:81;s:15:"report/sale_tax";i:82;s:14:"sale/affiliate";i:83;s:12:"sale/contact";i:84;s:11:"sale/coupon";i:85;s:13:"sale/customer";i:86;s:23:"sale/customer_blacklist";i:87;s:19:"sale/customer_group";i:88;s:10:"sale/order";i:89;s:11:"sale/return";i:90;s:12:"sale/voucher";i:91;s:18:"sale/voucher_theme";i:92;s:15:"setting/setting";i:93;s:13:"setting/store";i:94;s:16:"shipping/auspost";i:95;s:17:"shipping/citylink";i:96;s:14:"shipping/fedex";i:97;s:13:"shipping/flat";i:98;s:13:"shipping/free";i:99;s:13:"shipping/item";i:100;s:23:"shipping/parcelforce_48";i:101;s:15:"shipping/pickup";i:102;s:19:"shipping/royal_mail";i:103;s:12:"shipping/ups";i:104;s:13:"shipping/usps";i:105;s:15:"shipping/weight";i:106;s:11:"tool/backup";i:107;s:14:"tool/error_log";i:108;s:12:"total/coupon";i:109;s:12:"total/credit";i:110;s:14:"total/handling";i:111;s:16:"total/klarna_fee";i:112;s:19:"total/low_order_fee";i:113;s:12:"total/reward";i:114;s:14:"total/shipping";i:115;s:15:"total/sub_total";i:116;s:9:"total/tax";i:117;s:11:"total/total";i:118;s:13:"total/voucher";i:119;s:9:"user/user";i:120;s:20:"user/user_permission";}}'),
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:125:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:21:"localisation/tax_rate";i:31;s:25:"localisation/weight_class";i:32;s:17:"localisation/zone";i:33;s:14:"module/account";i:34;s:16:"module/affiliate";i:35;s:13:"module/banner";i:36;s:17:"module/bestseller";i:37;s:15:"module/carousel";i:38;s:15:"module/category";i:39;s:15:"module/featured";i:40;s:18:"module/google_talk";i:41;s:18:"module/information";i:42;s:13:"module/latest";i:43;s:16:"module/slideshow";i:44;s:14:"module/special";i:45;s:12:"module/store";i:46;s:14:"module/welcome";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:22:"payment/klarna_invoice";i:53;s:17:"payment/klarna_pp";i:54;s:14:"payment/liqpay";i:55;s:20:"payment/moneybookers";i:56;s:14:"payment/nochex";i:57;s:15:"payment/paymate";i:58;s:16:"payment/paypoint";i:59;s:13:"payment/payza";i:60;s:26:"payment/perpetual_payments";i:61;s:14:"payment/pp_pro";i:62;s:17:"payment/pp_pro_uk";i:63;s:19:"payment/pp_standard";i:64;s:15:"payment/sagepay";i:65;s:22:"payment/sagepay_direct";i:66;s:18:"payment/sagepay_us";i:67;s:19:"payment/twocheckout";i:68;s:28:"payment/web_payment_software";i:69;s:16:"payment/worldpay";i:70;s:27:"report/affiliate_commission";i:71;s:22:"report/customer_credit";i:72;s:22:"report/customer_online";i:73;s:21:"report/customer_order";i:74;s:22:"report/customer_reward";i:75;s:24:"report/product_purchased";i:76;s:21:"report/product_viewed";i:77;s:18:"report/sale_coupon";i:78;s:17:"report/sale_order";i:79;s:18:"report/sale_return";i:80;s:20:"report/sale_shipping";i:81;s:15:"report/sale_tax";i:82;s:14:"sale/affiliate";i:83;s:12:"sale/contact";i:84;s:11:"sale/coupon";i:85;s:13:"sale/customer";i:86;s:23:"sale/customer_blacklist";i:87;s:19:"sale/customer_group";i:88;s:10:"sale/order";i:89;s:11:"sale/return";i:90;s:12:"sale/voucher";i:91;s:18:"sale/voucher_theme";i:92;s:15:"setting/setting";i:93;s:13:"setting/store";i:94;s:16:"shipping/auspost";i:95;s:17:"shipping/citylink";i:96;s:14:"shipping/fedex";i:97;s:13:"shipping/flat";i:98;s:13:"shipping/free";i:99;s:13:"shipping/item";i:100;s:23:"shipping/parcelforce_48";i:101;s:15:"shipping/pickup";i:102;s:19:"shipping/royal_mail";i:103;s:12:"shipping/ups";i:104;s:13:"shipping/usps";i:105;s:15:"shipping/weight";i:106;s:11:"tool/backup";i:107;s:14:"tool/error_log";i:108;s:12:"total/coupon";i:109;s:12:"total/credit";i:110;s:14:"total/handling";i:111;s:16:"total/klarna_fee";i:112;s:19:"total/low_order_fee";i:113;s:12:"total/reward";i:114;s:14:"total/shipping";i:115;s:15:"total/sub_total";i:116;s:9:"total/tax";i:117;s:11:"total/total";i:118;s:13:"total/voucher";i:119;s:9:"user/user";i:120;s:20:"user/user_permission";i:121;s:13:"shipping/flat";i:122;s:13:"shipping/flat";i:123;s:13:"shipping/free";i:124;s:13:"shipping/free";}s:6:"modify";a:125:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:21:"localisation/tax_rate";i:31;s:25:"localisation/weight_class";i:32;s:17:"localisation/zone";i:33;s:14:"module/account";i:34;s:16:"module/affiliate";i:35;s:13:"module/banner";i:36;s:17:"module/bestseller";i:37;s:15:"module/carousel";i:38;s:15:"module/category";i:39;s:15:"module/featured";i:40;s:18:"module/google_talk";i:41;s:18:"module/information";i:42;s:13:"module/latest";i:43;s:16:"module/slideshow";i:44;s:14:"module/special";i:45;s:12:"module/store";i:46;s:14:"module/welcome";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:22:"payment/klarna_invoice";i:53;s:17:"payment/klarna_pp";i:54;s:14:"payment/liqpay";i:55;s:20:"payment/moneybookers";i:56;s:14:"payment/nochex";i:57;s:15:"payment/paymate";i:58;s:16:"payment/paypoint";i:59;s:13:"payment/payza";i:60;s:26:"payment/perpetual_payments";i:61;s:14:"payment/pp_pro";i:62;s:17:"payment/pp_pro_uk";i:63;s:19:"payment/pp_standard";i:64;s:15:"payment/sagepay";i:65;s:22:"payment/sagepay_direct";i:66;s:18:"payment/sagepay_us";i:67;s:19:"payment/twocheckout";i:68;s:28:"payment/web_payment_software";i:69;s:16:"payment/worldpay";i:70;s:27:"report/affiliate_commission";i:71;s:22:"report/customer_credit";i:72;s:22:"report/customer_online";i:73;s:21:"report/customer_order";i:74;s:22:"report/customer_reward";i:75;s:24:"report/product_purchased";i:76;s:21:"report/product_viewed";i:77;s:18:"report/sale_coupon";i:78;s:17:"report/sale_order";i:79;s:18:"report/sale_return";i:80;s:20:"report/sale_shipping";i:81;s:15:"report/sale_tax";i:82;s:14:"sale/affiliate";i:83;s:12:"sale/contact";i:84;s:11:"sale/coupon";i:85;s:13:"sale/customer";i:86;s:23:"sale/customer_blacklist";i:87;s:19:"sale/customer_group";i:88;s:10:"sale/order";i:89;s:11:"sale/return";i:90;s:12:"sale/voucher";i:91;s:18:"sale/voucher_theme";i:92;s:15:"setting/setting";i:93;s:13:"setting/store";i:94;s:16:"shipping/auspost";i:95;s:17:"shipping/citylink";i:96;s:14:"shipping/fedex";i:97;s:13:"shipping/flat";i:98;s:13:"shipping/free";i:99;s:13:"shipping/item";i:100;s:23:"shipping/parcelforce_48";i:101;s:15:"shipping/pickup";i:102;s:19:"shipping/royal_mail";i:103;s:12:"shipping/ups";i:104;s:13:"shipping/usps";i:105;s:15:"shipping/weight";i:106;s:11:"tool/backup";i:107;s:14:"tool/error_log";i:108;s:12:"total/coupon";i:109;s:12:"total/credit";i:110;s:14:"total/handling";i:111;s:16:"total/klarna_fee";i:112;s:19:"total/low_order_fee";i:113;s:12:"total/reward";i:114;s:14:"total/shipping";i:115;s:15:"total/sub_total";i:116;s:9:"total/tax";i:117;s:11:"total/total";i:118;s:13:"total/voucher";i:119;s:9:"user/user";i:120;s:20:"user/user_permission";i:121;s:13:"shipping/flat";i:122;s:13:"shipping/flat";i:123;s:13:"shipping/free";i:124;s:13:"shipping/free";}}'),
 (10, 'Demonstration', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `voucher`
+-- Структура таблицы `voucher`
 --
 
 CREATE TABLE IF NOT EXISTS `voucher` (
@@ -2768,7 +2459,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `voucher_history`
+-- Структура таблицы `voucher_history`
 --
 
 CREATE TABLE IF NOT EXISTS `voucher_history` (
@@ -2783,7 +2474,7 @@ CREATE TABLE IF NOT EXISTS `voucher_history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `voucher_theme`
+-- Структура таблицы `voucher_theme`
 --
 
 CREATE TABLE IF NOT EXISTS `voucher_theme` (
@@ -2793,7 +2484,7 @@ CREATE TABLE IF NOT EXISTS `voucher_theme` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
 
 --
--- Dumping data for table `voucher_theme`
+-- Дамп данных таблицы `voucher_theme`
 --
 
 INSERT INTO `voucher_theme` (`voucher_theme_id`, `image`) VALUES
@@ -2804,7 +2495,7 @@ INSERT INTO `voucher_theme` (`voucher_theme_id`, `image`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `voucher_theme_description`
+-- Структура таблицы `voucher_theme_description`
 --
 
 CREATE TABLE IF NOT EXISTS `voucher_theme_description` (
@@ -2815,7 +2506,7 @@ CREATE TABLE IF NOT EXISTS `voucher_theme_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `voucher_theme_description`
+-- Дамп данных таблицы `voucher_theme_description`
 --
 
 INSERT INTO `voucher_theme_description` (`voucher_theme_id`, `language_id`, `name`) VALUES
@@ -2826,7 +2517,7 @@ INSERT INTO `voucher_theme_description` (`voucher_theme_id`, `language_id`, `nam
 -- --------------------------------------------------------
 
 --
--- Table structure for table `weight_class`
+-- Структура таблицы `weight_class`
 --
 
 CREATE TABLE IF NOT EXISTS `weight_class` (
@@ -2836,7 +2527,7 @@ CREATE TABLE IF NOT EXISTS `weight_class` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `weight_class`
+-- Дамп данных таблицы `weight_class`
 --
 
 INSERT INTO `weight_class` (`weight_class_id`, `value`) VALUES
@@ -2848,7 +2539,7 @@ INSERT INTO `weight_class` (`weight_class_id`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `weight_class_description`
+-- Структура таблицы `weight_class_description`
 --
 
 CREATE TABLE IF NOT EXISTS `weight_class_description` (
@@ -2860,7 +2551,7 @@ CREATE TABLE IF NOT EXISTS `weight_class_description` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `weight_class_description`
+-- Дамп данных таблицы `weight_class_description`
 --
 
 INSERT INTO `weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES
@@ -2872,7 +2563,7 @@ INSERT INTO `weight_class_description` (`weight_class_id`, `language_id`, `title
 -- --------------------------------------------------------
 
 --
--- Table structure for table `zone`
+-- Структура таблицы `zone`
 --
 
 CREATE TABLE IF NOT EXISTS `zone` (
@@ -2885,7 +2576,7 @@ CREATE TABLE IF NOT EXISTS `zone` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3970 ;
 
 --
--- Dumping data for table `zone`
+-- Дамп данных таблицы `zone`
 --
 
 INSERT INTO `zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
@@ -6840,30 +6531,6 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (3967, 190, 'Obalno-kraška', '12', 1),
 (3968, 33, 'Ruse', '', 1),
 (3969, 101, 'Alborz', 'ALB', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `zone_to_geo_zone`
---
-
-CREATE TABLE IF NOT EXISTS `zone_to_geo_zone` (
-  `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
-  `country_id` int(11) NOT NULL,
-  `zone_id` int(11) NOT NULL DEFAULT '0',
-  `geo_zone_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`zone_to_geo_zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=66 ;
-
---
--- Dumping data for table `zone_to_geo_zone`
---
-
-INSERT INTO `zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
-(57, 222, 0, 3, '2010-02-26 22:33:24', '0000-00-00 00:00:00'),
-(65, 222, 0, 4, '2010-12-15 15:18:13', '0000-00-00 00:00:00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

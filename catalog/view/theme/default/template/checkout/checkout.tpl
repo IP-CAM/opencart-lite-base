@@ -8,7 +8,7 @@
   <h1><?php echo $heading_title; ?></h1>
   <div class="checkout">
     <div id="checkout">
-      <div class="checkout-heading"><?php echo $text_checkout_option; ?></div>
+      <div class="checkout-heading"><?php echo $text_checkout_billing; ?></div>
       <div class="checkout-content"></div>
     </div>
     <?php if ($shipping_required) { ?>
@@ -36,7 +36,7 @@ $('.checkout-heading a').on('click', function() {
 <?php if (!$logged) { ?>
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/guest_address',
+		url: 'index.php?route=checkout/guest_billing',
 		dataType: 'html',
 		success: function(html) {
 			$('#checkout .checkout-content').html(html);
@@ -50,7 +50,7 @@ $(document).ready(function() {
 });		
 <?php } else { ?>
 	$.ajax({
-		url: 'index.php?route=checkout/address',
+		url: 'index.php?route=checkout/billing',
 		dataType: 'html',
 		success: function(html) {
 			$('#checkout .checkout-content').html(html);
@@ -64,21 +64,18 @@ $(document).ready(function() {
 	});
 <?php } ?>
 
-
-
-
-$('.checkout-content').on('click', '#button-address', function() {
+$('.checkout-content').on('click', '#button-billing', function() {
     $.ajax({
-        url: 'index.php?route=checkout/address/validate',
+        url: 'index.php?route=checkout/billing/validate',
         type: 'post',
         data: $('#checkout input[type=\'hidden\']'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-address').attr('disabled', true);
-            $('#button-address').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+            $('#button-billing').attr('disabled', true);
+            $('#button-billing').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
         },
         complete: function() {
-            $('#button-address').attr('disabled', false);
+            $('#button-billing').attr('disabled', false);
             $('.wait').remove();
         },
         success: function(json) {
@@ -123,20 +120,19 @@ $('.checkout-content').on('click', '#button-address', function() {
 });
 
 
-// Guest Shipping
-
-$('.checkout-content').on('click', '#button-guest-address', function() {
+// Guest Billing
+$('.checkout-content').on('click', '#button-guest-billing', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/guest_address/validate',
+		url: 'index.php?route=checkout/guest_billing/validate',
 		type: 'post',
 		data: $('#checkout input[type=\'text\'], #checkout select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-guest-shipping').attr('disabled', true);
-			$('#button-guest-shipping').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-guest-billing').attr('disabled', true);
+			$('#button-guest-billing').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
 		},	
 		complete: function() {
-			$('#button-guest-shipping').attr('disabled', false); 
+			$('#button-guest-billing').attr('disabled', false);
 			$('.wait').remove();
 		},			
 		success: function(json) {
@@ -166,11 +162,7 @@ $('.checkout-content').on('click', '#button-guest-address', function() {
 				if (json['error']['email']) {
 					$('#checkout input[name=\'email\']').after('<span class="error">' + json['error']['email'] + '</span>');
 				}
-										
-				if (json['error']['address_1']) {
-					$('#checkout input[name=\'address\']').after('<span class="error">' + json['error']['address'] + '</span>');
-				}	
-				
+
 				if (json['error']['city']) {
 					$('#checkout input[name=\'city\']').after('<span class="error">' + json['error']['city'] + '</span>');
 				}	
@@ -215,6 +207,7 @@ $('.checkout-content').on('click', '#button-guest-address', function() {
 	});	
 });
 
+// Shipping Method
 $('.checkout-content').on('click', '#button-shipping-method', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/shipping_method/validate',
@@ -269,6 +262,7 @@ $('.checkout-content').on('click', '#button-shipping-method', function() {
 	});	
 });
 
+// Payment Method
 $('.checkout-content').on('click', '#button-payment-method', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/payment_method/validate', 

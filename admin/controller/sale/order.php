@@ -509,11 +509,9 @@ class Order implements iController {
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
-		$this->data['entry_fax'] = $this->language->get('entry_fax');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
 		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
-		$this->data['entry_company'] = $this->language->get('entry_company');
 		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_city'] = $this->language->get('entry_city');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -769,15 +767,7 @@ class Order implements iController {
 		} else {
       		$this->data['telephone'] = '';
     	}
-		
-    	if (isset($this->request->post['fax'])) {
-      		$this->data['fax'] = $this->request->post['fax'];
-    	} elseif (!empty($order_info)) { 
-			$this->data['fax'] = $order_info['fax'];
-		} else {
-      		$this->data['fax'] = '';
-    	}	
-		
+
 		if (isset($this->request->post['affiliate_id'])) {
       		$this->data['affiliate_id'] = $this->request->post['affiliate_id'];
     	} elseif (!empty($order_info)) { 
@@ -823,14 +813,6 @@ class Order implements iController {
 		} else {
 			$this->data['address'] = array();
 		}
-
-    	if (isset($this->request->post['company'])) {
-      		$this->data['company'] = $this->request->post['company'];
-    	} elseif (!empty($order_info)) { 
-			$this->data['company'] = $order_info['company'];
-		} else {
-      		$this->data['company'] = '';
-    	}
 
     	if (isset($this->request->post['address'])) {
       		$this->data['address'] = $this->request->post['address'];
@@ -1114,7 +1096,6 @@ class Order implements iController {
 			$this->data['text_customer_group'] = $this->language->get('text_customer_group');
 			$this->data['text_email'] = $this->language->get('text_email');
 			$this->data['text_telephone'] = $this->language->get('text_telephone');
-			$this->data['text_fax'] = $this->language->get('text_fax');
 			$this->data['text_total'] = $this->language->get('text_total');
 			$this->data['text_reward'] = $this->language->get('text_reward');		
 			$this->data['text_order_status'] = $this->language->get('text_order_status');
@@ -1129,7 +1110,6 @@ class Order implements iController {
 			$this->data['text_date_modified'] = $this->language->get('text_date_modified');			
 			$this->data['text_firstname'] = $this->language->get('text_firstname');
 			$this->data['text_lastname'] = $this->language->get('text_lastname');
-			$this->data['text_company'] = $this->language->get('text_company');
 			$this->data['text_address'] = $this->language->get('text_address');
 			$this->data['text_city'] = $this->language->get('text_city');
 			$this->data['text_postcode'] = $this->language->get('text_postcode');
@@ -1309,7 +1289,6 @@ class Order implements iController {
 
 			$this->data['email'] = $order_info['email'];
 			$this->data['telephone'] = $order_info['telephone'];
-			$this->data['fax'] = $order_info['fax'];
 			$this->data['comment'] = nl2br($order_info['comment']);
 			$this->data['shipping_method'] = $order_info['shipping_method'];
 			$this->data['payment_method'] = $order_info['payment_method'];
@@ -1360,7 +1339,6 @@ class Order implements iController {
 			$this->data['accept_language'] = $order_info['accept_language'];
 			$this->data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 			$this->data['date_modified'] = date($this->language->get('date_format_short'), strtotime($order_info['date_modified']));
-			$this->data['company'] = $order_info['company'];
 			$this->data['address'] = $order_info['address'];
 			$this->data['address_id'] = $order_info['address_id'];
 			$this->data['city'] = $order_info['city'];
@@ -2080,7 +2058,6 @@ class Order implements iController {
 		$this->data['text_invoice_date'] = $this->language->get('text_invoice_date');
 		$this->data['text_date_added'] = $this->language->get('text_date_added');
 		$this->data['text_telephone'] = $this->language->get('text_telephone');
-		$this->data['text_fax'] = $this->language->get('text_fax');
 		$this->data['text_to'] = $this->language->get('text_to');
 		$this->data['text_ship_to'] = $this->language->get('text_ship_to');
 		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
@@ -2127,13 +2104,12 @@ class Order implements iController {
 				if ($order_info['shipping_address_format']) {
 					$format = $order_info['shipping_address_format'];
 				} else {
-					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+					$format = '{firstname} {lastname}' . "\n" . '{address}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 				}
 
 				$find = array(
 					'{firstname}',
 					'{lastname}',
-					'{company}',
 					'{address}',
 					'{city}',
 					'{postcode}',
@@ -2145,7 +2121,6 @@ class Order implements iController {
 				$replace = array(
 					'firstname' => $order_info['shipping_firstname'],
 					'lastname'  => $order_info['shipping_lastname'],
-					'company'   => $order_info['shipping_company'],
 					'address' => $order_info['shipping_address'],
 					'city'      => $order_info['shipping_city'],
 					'postcode'  => $order_info['shipping_postcode'],
@@ -2159,13 +2134,12 @@ class Order implements iController {
 				if ($order_info['payment_address_format']) {
 					$format = $order_info['payment_address_format'];
 				} else {
-					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+					$format = '{firstname} {lastname}' . "\n" . '{address}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 				}
 
 				$find = array(
 					'{firstname}',
 					'{lastname}',
-					'{company}',
 					'{address}',
 					'{city}',
 					'{postcode}',
@@ -2177,7 +2151,6 @@ class Order implements iController {
 				$replace = array(
 					'firstname' => $order_info['payment_firstname'],
 					'lastname'  => $order_info['payment_lastname'],
-					'company'   => $order_info['payment_company'],
 					'address' => $order_info['payment_address'],
 					'city'      => $order_info['payment_city'],
 					'postcode'  => $order_info['payment_postcode'],

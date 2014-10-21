@@ -1,18 +1,6 @@
-<fieldset id="address">
-    <div style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;"> <?php echo $entry_customer_group; ?><br />
-        <?php foreach ($customer_groups as $customer_group) { ?>
-        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-        <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-        <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
-        <br />
-        <?php } else { ?>
-        <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" />
-        <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
-        <br />
-        <?php } ?>
-        <?php } ?>
-        <br />
-    </div>
+<fieldset>
+    <div class="left">
+        <h2><?php echo $text_your_details; ?></h2>
 
     <div class="form-group">
                     <span class="input-icon">
@@ -34,6 +22,25 @@
                     <input type="text" class="form-control" name="telephone" placeholder="<?php echo $entry_telephone; ?>" value="<?php echo $telephone; ?>" required />
                          <i class="fa fa-phone"></i> </span>
     </div>
+        <div style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;"> <?php echo $entry_customer_group; ?><br />
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+            <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
+            <br />
+            <?php } else { ?>
+            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" />
+            <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
+            <br />
+            <?php } ?>
+            <?php } ?>
+            <br />
+        </div>
+
+    </div>
+
+    <div class="right">
+        <h2><?php echo $text_your_address; ?></h2>
     <div class="form-group">
                     <span class="input-icon">
                     <input type="text" class="form-control" name="city" placeholder="<?php echo $entry_city ?>" value="<?php echo $city; ?>" required />
@@ -72,21 +79,23 @@
             </select>
         </div>
     </div>
+    </div>
+
     <div class="buttons">
         <div class="right">
-            <input type="button" value="<?php echo $button_continue; ?>" id="button-guest-address" class="button" />
+            <input type="button" value="<?php echo $button_continue; ?>" id="button-guest-billing" class="button" />
         </div>
     </div>
 </fieldset>
 <br />
 <br />
 <script type="text/javascript"><!--
-            $('#address select[name=\'country_id\']').bind('change', function() {
+            $('select[name=\'country_id\']').bind('change', function() {
                 $.ajax({
-                    url: 'index.php?route=checkout/address/country&country_id=' + this.value,
+                    url: 'index.php?route=checkout/billing/country&country_id=' + this.value,
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#address select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+                        $('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
                     },
                     complete: function() {
                         $('.wait').remove();
@@ -115,7 +124,7 @@
                             html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
                         }
 
-                        $('#address select[name=\'zone_id\']').html(html);
+                        $('select[name=\'zone_id\']').html(html);
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -123,5 +132,5 @@
                 });
             });
 
-    $('#address select[name=\'country_id\']').trigger('change');
+    $('select[name=\'country_id\']').trigger('change');
 //--></script>

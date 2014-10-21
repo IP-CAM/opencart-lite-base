@@ -64,12 +64,6 @@
             <td><?php echo $text_telephone; ?></td>
             <td><?php echo $telephone; ?></td>
           </tr>
-          <?php if ($fax) { ?>
-          <tr>
-            <td><?php echo $text_fax; ?></td>
-            <td><?php echo $fax; ?></td>
-          </tr>
-          <?php } ?>
           <tr>
             <td><?php echo $text_total; ?></td>
             <td><?php echo $total; ?>
@@ -163,12 +157,6 @@
             <td><?php echo $text_lastname; ?></td>
             <td><?php echo $lastname; ?></td>
           </tr>
-          <?php if ($company) { ?>
-          <tr>
-            <td><?php echo $text_company; ?></td>
-            <td><?php echo $company; ?></td>
-          </tr>
-          <?php } ?>
           <tr>
             <td><?php echo $text_address; ?></td>
             <td><?php echo $address; ?></td>

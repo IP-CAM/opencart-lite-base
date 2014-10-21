@@ -12,14 +12,13 @@ class Shipping_method implements iController {
 		$this->load->model('account/address');
 
 
-		if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {
-			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);
+		if ($this->customer->isLogged() && isset($this->session->data['address_id'])) {
+			$address = $this->model_account_address->getAddress($this->session->data['address_id']);
 		} elseif (isset($this->session->data['guest'])) {
-			$shipping_address = $this->session->data['guest']['billing'];
-			//$shipping_address = true;
+			$address = $this->session->data['guest']['address'];
 		}
 		
-		if (!empty($shipping_address)) {
+		if (!empty($address)) {
 			// Shipping Methods
 			$quote_data = array();
 			
@@ -108,14 +107,13 @@ class Shipping_method implements iController {
 		// Validate if shipping address has been set.		
 		$this->load->model('account/address');
 
-		if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {
-			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
+		if ($this->customer->isLogged() && isset($this->session->data['address_id'])) {
+			$address = $this->model_account_address->getAddress($this->session->data['address_id']);
 		} elseif (isset($this->session->data['guest'])) {
-			$shipping_address = $this->session->data['guest']['billing'];
-			//$shipping_address = true;
+			$address = $this->session->data['guest']['address'];
 		}
 		
-		if (empty($shipping_address)) {								
+		if (empty($address)) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
