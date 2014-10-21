@@ -8,7 +8,6 @@ class Customer {
 	private $lastname;
 	private $email;
 	private $telephone;
-	private $fax;
 	private $newsletter;
 	private $customer_group_id;
 	private $address_id;
@@ -28,7 +27,6 @@ class Customer {
 				$this->lastname = $customer_query->row['lastname'];
 				$this->email = $customer_query->row['email'];
 				$this->telephone = $customer_query->row['telephone'];
-				$this->fax = $customer_query->row['fax'];
 				$this->newsletter = $customer_query->row['newsletter'];
 				$this->customer_group_id = $customer_query->row['customer_group_id'];
 				$this->address_id = $customer_query->row['address_id'];
@@ -87,7 +85,6 @@ class Customer {
 			$this->lastname = $customer_query->row['lastname'];
 			$this->email = $customer_query->row['email'];
 			$this->telephone = $customer_query->row['telephone'];
-			$this->fax = $customer_query->row['fax'];
 			$this->newsletter = $customer_query->row['newsletter'];
 			$this->customer_group_id = $customer_query->row['customer_group_id'];
 			$this->address_id = $customer_query->row['address_id'];
@@ -110,7 +107,6 @@ class Customer {
 		$this->lastname = '';
 		$this->email = '';
 		$this->telephone = '';
-		$this->fax = '';
 		$this->newsletter = '';
 		$this->customer_group_id = '';
 		$this->address_id = '';
@@ -139,11 +135,7 @@ class Customer {
   	public function getTelephone() {
 		return $this->telephone;
   	}
-  
-  	public function getFax() {
-		return $this->fax;
-  	}
-	
+
   	public function getNewsletter() {
 		return $this->newsletter;	
   	}

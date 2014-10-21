@@ -57,7 +57,7 @@ class Checkout implements iController {
 					
 	    $this->data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_checkout_option'] = $this->language->get('text_checkout_option');
+		$this->data['text_checkout_billing'] = $this->language->get('text_checkout_billing');
 		$this->data['text_checkout_address'] = $this->language->get('text_checkout_address');
 		$this->data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
 		$this->data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');		
