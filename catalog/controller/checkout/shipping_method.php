@@ -11,10 +11,12 @@ class Shipping_method implements iController {
 		
 		$this->load->model('account/address');
 
+
 		if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {
-			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
+			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);
 		} elseif (isset($this->session->data['guest'])) {
-			$shipping_address = $this->session->data['guest']['shipping'];
+			$shipping_address = $this->session->data['guest']['billing'];
+			//$shipping_address = true;
 		}
 		
 		if (!empty($shipping_address)) {
@@ -57,6 +59,8 @@ class Shipping_method implements iController {
 		$this->data['text_comments'] = $this->language->get('text_comments');
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
+
+		//var_dump($this->session);
 		
 		if (empty($this->session->data['shipping_methods'])) {
 			$this->data['error_warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact'));
@@ -107,7 +111,8 @@ class Shipping_method implements iController {
 		if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {
 			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
 		} elseif (isset($this->session->data['guest'])) {
-			$shipping_address = $this->session->data['guest']['shipping'];
+			$shipping_address = $this->session->data['guest']['billing'];
+			//$shipping_address = true;
 		}
 		
 		if (empty($shipping_address)) {								

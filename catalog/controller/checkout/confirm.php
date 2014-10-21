@@ -16,7 +16,7 @@ class Confirm implements iController {
 			if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {
 				$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
 			} elseif (isset($this->session->data['guest'])) {
-				$shipping_address = $this->session->data['guest']['shipping'];
+				$shipping_address = $this->session->data['guest']['billing'];
 			}
 			
 			if (empty($shipping_address)) {								
@@ -35,15 +35,18 @@ class Confirm implements iController {
 		// Validate if payment address has been set.
 		$this->load->model('account/address');
 
-		/*if ($this->customer->isLogged() && isset($this->session->data['address_id'])) {
-			$address = $this->model_account_address->getAddress($this->session->data['address_id']);
+		if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {
+			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);
 		} elseif (isset($this->session->data['guest'])) {
-			$address = $this->session->data['guest']['payment'];
+			//$address = $this->session->data['guest']['payment'];
+			//$shipping_address = true;
+			//exit(var_dump($this->session));
+			$shipping_address = $this->session->data['guest']['billing'];
 		}
 
-		if (empty($address)) {
+		if (empty($shipping_address)) {
 			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
-		}*/
+		}
 		
 		// Validate if payment method has been set.	
 		if (!isset($this->session->data['payment_method'])) {
@@ -129,30 +132,31 @@ class Confirm implements iController {
 				$data['fax'] = $this->customer->getFax();
 			
 				$this->load->model('account/address');
-				$address = $this->model_account_address->getAddress($this->customer->getAddressId());
+				$shipping_address = $this->model_account_address->getAddress($this->customer->getAddressId());
 			} elseif (isset($this->session->data['guest'])) {
 				$data['customer_id'] = 0;
-				$data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
-				$data['firstname'] = $this->session->data['guest']['firstname'];
-				$data['lastname'] = $this->session->data['guest']['lastname'];
-				$data['email'] = $this->session->data['guest']['email'];
-				$data['telephone'] = $this->session->data['guest']['telephone'];
-				$data['fax'] = $this->session->data['guest']['fax'];
-				
-				$address = $this->session->data['guest']['payment'];
+				$data['customer_group_id'] = $this->session->data['guest']['billing']['customer_group_id'];
+				$data['firstname'] = $this->session->data['guest']['billing']['firstname'];
+				$data['lastname'] = $this->session->data['guest']['billing']['lastname'];
+				$data['email'] = $this->session->data['guest']['billing']['email'];
+
+				$data['company'] = isset($this->session->data['guest']['billing']['company']) ? $this->session->data['guest']['billing']['company'] : '';
+				$data['telephone'] = isset($this->session->data['guest']['billing']['telephone']) ? $this->session->data['guest']['billing']['telephone'] : '';
+				$data['fax'] = isset($this->session->data['guest']['billing']['fax']) ? $this->session->data['guest']['billing']['fax'] : '';
+
+				$shipping_address = $this->session->data['guest']['billing'];
 			}
 			
 
-			$data['company'] = $address['company'];
-            $data['address'] = $address['address'];
+            $data['address'] = $shipping_address['address'];
 			$data['address_id'] = $this->customer->getAddressId();
-			$data['city'] = $address['city'];
-			$data['postcode'] = $address['postcode'];
-			$data['zone'] = $address['zone'];
-			$data['zone_id'] = $address['zone_id'];
-			$data['country'] = $address['country'];
-			$data['country_id'] = $address['country_id'];
-			$data['address_format'] = $address['address_format'];
+			$data['city'] = $shipping_address['city'];
+			$data['postcode'] = $shipping_address['postcode'];
+			$data['zone'] = $shipping_address['zone'];
+			$data['zone_id'] = $shipping_address['zone_id'];
+			$data['country'] = $shipping_address['country'];
+			$data['country_id'] = $shipping_address['country_id'];
+			$data['address_format'] = $shipping_address['address_format'];
 		
 			if (isset($this->session->data['payment_method']['title'])) {
 				$data['payment_method'] = $this->session->data['payment_method']['title'];

@@ -1,4 +1,19 @@
 <fieldset id="address">
+    <div style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;"> <?php echo $entry_customer_group; ?><br />
+        <?php foreach ($customer_groups as $customer_group) { ?>
+        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+        <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+        <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
+        <br />
+        <?php } else { ?>
+        <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" />
+        <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
+        <br />
+        <?php } ?>
+        <?php } ?>
+        <br />
+    </div>
+
     <div class="form-group">
                     <span class="input-icon">
                     <input type="text" class="form-control" name="firstname" placeholder="<?php echo $entry_firstname; ?>" value="<?php echo $firstname; ?>" required />
@@ -8,6 +23,11 @@
                     <span class="input-icon">
                     <input type="text" class="form-control" name="lastname" placeholder="<?php echo $entry_lastname; ?>" value="<?php echo $lastname; ?>" required />
                          <i class="fa fa-users"></i> </span>
+    </div>
+    <div class="form-group">
+                    <span class="input-icon">
+                    <input type="text" class="form-control" name="email" placeholder="<?php echo $entry_email; ?>" value="<?php echo $email; ?>" required />
+                         <i class="fa fa-envelope"></i> </span>
     </div>
     <div class="form-group">
                     <span class="input-icon">
@@ -54,7 +74,7 @@
     </div>
     <div class="buttons">
         <div class="right">
-            <input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button" />
+            <input type="button" value="<?php echo $button_continue; ?>" id="button-guest-address" class="button" />
         </div>
     </div>
 </fieldset>
@@ -66,16 +86,16 @@
                     url: 'index.php?route=checkout/address/country&country_id=' + this.value,
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#payment-address select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+                        $('#address select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
                     },
                     complete: function() {
                         $('.wait').remove();
                     },
                     success: function(json) {
                         if (json['postcode_required'] == '1') {
-                            $('#payment-postcode-required').show();
+                            $('#postcode-required').show();
                         } else {
-                            $('#payment-postcode-required').hide();
+                            $('#postcode-required').hide();
                         }
 
                         html = '<option value=""><?php echo $text_select; ?></option>';
