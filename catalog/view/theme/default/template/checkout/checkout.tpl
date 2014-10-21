@@ -36,7 +36,7 @@ $('.checkout-heading a').on('click', function() {
 <?php if (!$logged) { ?>
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=checkout/guest',
+		url: 'index.php?route=checkout/guest_address',
 		dataType: 'html',
 		success: function(html) {
 			$('#checkout .checkout-content').html(html);
@@ -125,9 +125,9 @@ $('.checkout-content').on('click', '#button-address', function() {
 
 // Guest Shipping
 
-$('.checkout-content').on('click', '#button-guest-shipping', function() {
+$('.checkout-content').on('click', '#button-guest-address', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/guest_shipping/validate',
+		url: 'index.php?route=checkout/guest_address/validate',
 		type: 'post',
 		data: $('#checkout input[type=\'text\'], #checkout select'),
 		dataType: 'json',
@@ -157,7 +157,15 @@ $('.checkout-content').on('click', '#button-guest-shipping', function() {
 				
 				if (json['error']['lastname']) {
 					$('#checkout input[name=\'lastname\']').after('<span class="error">' + json['error']['lastname'] + '</span>');
-				}	
+				}
+
+				if (json['error']['address']) {
+					$('#checkout input[name=\'address\']').after('<span class="error">' + json['error']['address'] + '</span>');
+				}
+
+				if (json['error']['email']) {
+					$('#checkout input[name=\'email\']').after('<span class="error">' + json['error']['email'] + '</span>');
+				}
 										
 				if (json['error']['address_1']) {
 					$('#checkout input[name=\'address\']').after('<span class="error">' + json['error']['address'] + '</span>');

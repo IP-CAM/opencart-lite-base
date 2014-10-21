@@ -73,7 +73,7 @@ $_['error_postcode']                 = 'Postcode must be between 2 and 10 charac
 $_['error_country']                  = 'Please select a country!';
 $_['error_zone']                     = 'Please select a region / state!';
 $_['error_agree']                    = 'Warning: You must agree to the %s!';
-$_['error_address']                  = 'Warning: You must select address!';
+//$_['error_address']                  = 'Warning: You must select address!';
 $_['error_shipping']                 = 'Warning: Shipping method required!';
 $_['error_no_shipping']              = 'Warning: No Shipping options are available. Please <a href="%s">contact us</a> for assistance!';
 $_['error_payment']                  = 'Warning: Payment method required!';

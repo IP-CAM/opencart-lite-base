@@ -14,7 +14,7 @@ class Guest_shipping implements iController {
 
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
-		$this->data['entry_company'] = $this->language->get('entry_company');
+		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
 		$this->data['entry_city'] = $this->language->get('entry_city');
@@ -22,6 +22,26 @@ class Guest_shipping implements iController {
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
+
+		$this->load->model('account/customer_group');
+
+		$this->data['customer_groups'] = array();
+
+		if (is_array($this->config->get('config_customer_group_display'))) {
+			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
+
+			foreach ($customer_groups as $customer_group) {
+				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+					$this->data['customer_groups'][] = $customer_group;
+				}
+			}
+		}
+
+		if (isset($this->session->data['guest']['customer_group_id'])) {
+			$this->data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
+		} else {
+			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
+		}
 					
 		if (isset($this->session->data['guest']['shipping']['firstname'])) {
 			$this->data['firstname'] = $this->session->data['guest']['shipping']['firstname'];
@@ -110,7 +130,19 @@ class Guest_shipping implements iController {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		} 
 		
-		if (!$json) {		
+		if (!$json) {
+
+			// Customer Group
+			$this->load->model('account/customer_group');
+
+			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+				$customer_group_id = $this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = $this->config->get('config_customer_group_id');
+			}
+
+			//$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
 			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -118,7 +150,11 @@ class Guest_shipping implements iController {
 			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
-			
+
+			if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
+
 			if ((utf8_strlen($this->request->post['address']) < 3) || (utf8_strlen($this->request->post['address']) > 128)) {
 				$json['error']['address'] = $this->language->get('error_address');
 			}
@@ -147,6 +183,7 @@ class Guest_shipping implements iController {
 		if (!$json) {
 			$this->session->data['guest']['shipping']['firstname'] = trim($this->request->post['firstname']);
 			$this->session->data['guest']['shipping']['lastname'] = trim($this->request->post['lastname']);
+			$this->session->data['guest']['shipping']['email'] = $this->request->post['email'];
 			$this->session->data['guest']['shipping']['address'] = $this->request->post['address'];
 			$this->session->data['guest']['shipping']['postcode'] = $this->request->post['postcode'];
 			$this->session->data['guest']['shipping']['city'] = $this->request->post['city'];

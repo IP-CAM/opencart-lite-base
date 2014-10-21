@@ -135,7 +135,8 @@ class Payment_method implements iController {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart');				
 		}	
-		
+
+
 		// Validate minimum quantity requirments.			
 		$products = $this->cart->getProducts();
 				
@@ -156,14 +157,15 @@ class Payment_method implements iController {
 		}
 											
 		if (!$json) {
+
 			if (!isset($this->request->post['payment_method'])) {
 				$json['error']['warning'] = $this->language->get('error_payment');
 			} else {
 				if (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
 					$json['error']['warning'] = $this->language->get('error_payment');
 				}
-			}	
-							
+			}
+
 			if ($this->config->get('config_checkout_id')) {
 				$this->load->model('catalog/information');
 				
