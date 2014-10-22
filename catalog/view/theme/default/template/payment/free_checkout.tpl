@@ -1,6 +1,8 @@
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
+	  <button id="button-confirm" class="btn btn-success pull-right">
+		  <?php echo $button_confirm; ?> <i class="fa fa-check"></i>
+	  </button>
   </div>
 </div>
 <script type="text/javascript"><!--
