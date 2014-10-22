@@ -83,7 +83,9 @@
 
     <div class="buttons">
         <div class="right">
-            <input type="button" value="<?php echo $button_continue; ?>" id="button-guest-billing" class="button" />
+            <button id="button-guest-billing" class="btn btn-primary pull-right">
+                <?php echo $button_continue; ?> <i class="fa fa-arrow-circle-right"></i>
+            </button>
         </div>
     </div>
 </fieldset>

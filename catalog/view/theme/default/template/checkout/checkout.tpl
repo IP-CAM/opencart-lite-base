@@ -28,9 +28,9 @@
   </div>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
-$('.checkout-heading a').on('click', function() {
+$('.checkout').on('click', '.checkout-heading a', function() {
 	$('.checkout-content').slideUp('slow');
-	
+
 	$(this).parent().parent().find('.checkout-content').slideDown('slow');
 });
 <?php if (!$logged) { ?>
@@ -103,7 +103,7 @@ $('.checkout-content').on('click', '#button-billing', function() {
                         $('#checkout .checkout-heading a').remove();
                         $('#shipping-method .checkout-heading a').remove();
 
-                        $('#checkout .checkout-heading').append('<a><?php echo $text_modify; ?></a>');
+                        $('#checkout .checkout-heading').append('<a><i class="fa fa-pencil"></i></a>');
 
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
@@ -193,7 +193,7 @@ $('.checkout-content').on('click', '#button-guest-billing', function() {
 						$('#shipping-method .checkout-heading a').remove();
 						$('#payment-method .checkout-heading a').remove();
 							
-						$('#checkout .checkout-heading').append('<a><?php echo $text_modify; ?></a>');
+						$('#checkout .checkout-heading').append('<a><i class="fa fa-pencil"></i></a>');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -247,7 +247,7 @@ $('.checkout-content').on('click', '#button-shipping-method', function() {
 						$('#shipping-method .checkout-heading a').remove();
 						$('#payment-method .checkout-heading a').remove();
 						
-						$('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+						$('#shipping-method .checkout-heading').append('<a><i class="fa fa-pencil"></i></a>');	
 
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
@@ -304,7 +304,7 @@ $('.checkout-content').on('click', '#button-payment-method', function() {
 						
 						$('#payment-method .checkout-heading a').remove();
 						
-						$('#payment-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+						$('#payment-method .checkout-heading').append('<a><i class="fa fa-pencil"></i></a>');	
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

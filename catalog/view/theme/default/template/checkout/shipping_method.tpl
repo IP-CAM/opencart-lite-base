@@ -36,6 +36,8 @@
 <br />
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" class="button" />
+    <button id="button-shipping-method" class="btn btn-primary pull-right">
+      <?php echo $button_continue; ?> <i class="fa fa-arrow-circle-right"></i>
+    </button>
   </div>
 </div>

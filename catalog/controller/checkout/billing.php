@@ -10,10 +10,20 @@ class Billing implements iController {
 
         $this->language->load('checkout/checkout');
 
-        $this->load->model('account/address');
-
         $this->data['text_your_details'] = $this->language->get('text_your_details');
         $this->data['text_your_address'] = $this->language->get('text_your_address');
+
+        $this->data['entry_firstname'] = $this->language->get('entry_firstname');
+        $this->data['entry_lastname'] = $this->language->get('entry_lastname');
+        $this->data['entry_email'] = $this->language->get('entry_email');
+        $this->data['entry_telephone'] = $this->language->get('entry_telephone');
+        $this->data['entry_address'] = $this->language->get('entry_address');
+        $this->data['entry_postcode'] = $this->language->get('entry_postcode');
+        $this->data['entry_city'] = $this->language->get('entry_city');
+        $this->data['entry_country'] = $this->language->get('entry_country');
+        $this->data['entry_zone'] = $this->language->get('entry_zone');
+
+        $this->load->model('account/address');
 
         $this->data['address_id'] = $this->customer->getAddressId();
         $this->data['address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
